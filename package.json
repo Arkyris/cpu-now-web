@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@eosdacio/ual-wax": "^1.5.1",
+    "@rollup/plugin-replace": "^4.0.0",
     "eosjs": "^22.1.0",
     "sirv-cli": "^2.0.0",
     "ual-anchor": "^1.1.5",
