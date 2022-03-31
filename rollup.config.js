@@ -5,7 +5,11 @@ import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
 import json from "@rollup/plugin-json";
+<<<<<<< HEAD
 import replace from '@rollup/plugin-replace';
+=======
+import replace from "@rollup/plugin-replace";
+>>>>>>> 9bd200dfe31da74e8b1ea215c231f6cac134f7ea
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -59,8 +63,12 @@ export default {
 			dedupe: ['svelte']
 		}),
 		commonjs(),
+<<<<<<< HEAD
 		replace({
 			preventAssignment: true,
+=======
+        replace({
+>>>>>>> 9bd200dfe31da74e8b1ea215c231f6cac134f7ea
             'Object.defineProperty(exports, "__esModule", { value: true });': '',
             delimiters: ['\n', '\n']
         }),
