@@ -2,7 +2,7 @@
     import { Anchor } from 'ual-anchor';
     import { Wax } from '@eosdacio/ual-wax';
     import { UALJs } from 'ual-plainjs-renderer';
-    import { loggedInUser, setUser } from './stores/current_user';
+    import { loggedInUser, setUser, acctName } from './stores/current_user';
     import { rpcStore } from './stores/JsonRpc';
     import { JsonRpc } from 'eosjs';
     import { onMount } from "svelte";
@@ -35,6 +35,7 @@
         console.info("User Information:");
         console.info("Account Name:", await loggedInUser.getAccountName());
         console.info("Chain Id:", await loggedInUser.getChainId());
+        $acctName = await loggedInUser.getAccountName();
     };
 
     const myChain = {
@@ -75,9 +76,9 @@
 
 const updateBalance = async () => {
   try {
-    const rpc = new JsonRpc('https://wax.greymass.com');
+    //const rpc = new JsonRpc('https://wax.greymass.com');
     const accountName = await loggedInUser.getAccountName();
-    const data = await rpc.get_account(accountName);
+    const data = await $rpcStore.get_account(accountName);
 
     const { core_liquid_balance: balance } = data
     balanceTag.innerHTML = `Account Liquid Balance: ${balance}`

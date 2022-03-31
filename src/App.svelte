@@ -1,12 +1,22 @@
 <script>
-import Header from './Header.svelte';
-import Transact from './TransactButton.svelte';
+	import Header from "./Header.svelte";
+	import Transact from "./TransactButton.svelte";
+	import { acctName } from "./stores/current_user.js";
+
+	let userUpdateInterval;
+	let user = 'nobody';
+	//userUpdateInterval = setInterval(setUser(), 1000);
+
+	async function setUser() {
+		 user = await loggedInUser.getAccountName();
+	}
 
 </script>
 
 <main>
-	<Header/>
-	<Transact/>
+	<Header />
+	<Transact />
+	<p>Welcome {$acctName}</p>
 </main>
 
 <style>
