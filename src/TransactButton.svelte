@@ -14,7 +14,7 @@
             const userAccountName = await loggedInUser.getAccountName();
             demoTransaction.actions[0].authorization[0].actor = userAccountName;
 
-            loggedInUser.signTransaction(demoTransaction, { broadcast: true });
+            loggedInUser.signTransaction(demoTransaction, { blocksBehind: 3, expireSeconds: 30, broadcast: true });
         });
     };
 </script>
