@@ -2,42 +2,30 @@
     import { onMount } from "svelte";
     import LoginButton from "./LoginButton.svelte";
     import { JsonRpc } from "eosjs";
-    import { loggedInUser } from "./stores/current_user";
     import {
         acctName,
-        balance,
-        balanceUpdateInterval,
+        walletBalance,
+        walletBalanceUpdateInterval,
     } from "./stores/current_user";
+    import { myChain } from "./stores/chainInfo";
 
     onMount(() => {
-        $balanceUpdateInterval = setInterval(updateBalance, 1000);
+        $walletBalanceUpdateInterval = setInterval(updateWalletBalance, 1000);
     });
 
-    const myChain = {
-        chainId:
-            "1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4",
-        rpcEndpoints: [
-            {
-                protocol: "https",
-                host: "wax.greymass.com",
-                port: "443",
-            },
-        ],
-    };
-
-    const updateBalance = async () => {
+    const updateWalletBalance = async () => {
         try {
             if ($acctName != "") {
                 const rpc = new JsonRpc(
                     `${myChain.rpcEndpoints[0].protocol}://${myChain.rpcEndpoints[0].host}:${myChain.rpcEndpoints[0].port}`
                 );
-                const accountName = await loggedInUser.getAccountName();
-                const data = await rpc.get_account(accountName);
+                //const accountName = await loggedInUser.getAccountName();
+                const data = await rpc.get_account($acctName);
 
                 //const { core_liquid_balance: $balance } = data;
-                $balance = data.core_liquid_balance;
+                $walletBalance = data.core_liquid_balance;
             } else {
-                $balance = "";
+                $walletBalance = "";
             }
         } catch (e) {
             console.error(e);
@@ -46,7 +34,7 @@
 </script>
 
 <header class="header">
-    <p id="p-transfer">Welcome {$acctName}:<br />{$balance}</p>
+    <p id="p-transfer">Welcome {$acctName}:<br />{$walletBalance}</p>
     <div class="header-div">
         <LoginButton />
     </div>
@@ -63,6 +51,7 @@
     #p-transfer {
         position: absolute;
         flex-direction: row;
+        color: aquamarine;
         right: 150px;
         top: 21px;
         margin: 0px;
