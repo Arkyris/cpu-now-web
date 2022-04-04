@@ -57,8 +57,9 @@
         ual_button.style.borderRadius = "25px";
         ual_button.style.width = "100px";
         ual_button.style.height = "50px";
-        ual_button.style.animationName = "loginAnimation";
-        ual_button.style.animationDuration = "5s";
+        ual_button.style.animationName = "inherit";
+        ual_button.style.animationDuration = "2s";
+        ual_button.style.animationIterationCount = "infinite";
         //ual_button.style.boxShadow = `inset 0 0 4px #fff, inset ${$pHI}rem ${$pVI}rem 5px #f0f`;
     } //, inset -10px 0 5px #0ff, inset 10px 0 10px #f0f, inset -10px 0 10px #0ff, 0 0 4px #fff, -10px 0 10px #f0f, 10px 0 10px #0ff
 
@@ -108,15 +109,94 @@
         background-color: #2d3148;
         margin: 0px;
         border-radius: 25px;
+        animation-name: loginAnimation;
     }
 
 
     @keyframes loginAnimation {
         from {
-            box-shadow: inset 1rem 0rem 5px #f0f;
+            box-shadow: inset 1rem 0.0rem 5px #f0f,
+            inset -1.0rem 0.0rem 5px #0ff;
         }
-        to {
-            box-shadow: inset 0.6rem 0.3rem 5px #f0f;
+        5%{
+            box-shadow: inset 0.8rem 0.1rem 5px #f0f,
+            inset -0.8rem -0.1rem 5px #0ff;
+        }
+        10%{
+            box-shadow: inset 0.6rem 0.2rem 5px #f0f,
+            inset -0.6rem -0.2rem 5px #0ff;
+        }
+        15%{
+            box-shadow: inset 0.4rem 0.3rem 5px #f0f,
+            inset -0.4rem -0.3rem 5px #0ff;
+        }
+        20%{
+            box-shadow: inset 0.2rem 0.4rem 5px #f0f,
+            inset -0.2rem -0.4rem 5px #0ff;
+        }
+        25%{
+            box-shadow: inset 0.0rem 0.5rem 5px #f0f,
+            inset -0.0rem -0.5rem 5px #0ff;
+        }
+        30%{
+            box-shadow: inset -0.2rem 0.4rem 5px #f0f,
+            inset 0.2rem -0.4rem 5px #0ff;
+        }
+        35%{
+            box-shadow: inset -0.4rem 0.3rem 5px #f0f,
+            inset 0.4rem -0.3rem 5px #0ff;
+        }
+        40%{
+            box-shadow: inset -0.6rem 0.2rem 5px #f0f,
+            inset 0.6rem -0.2rem 5px #0ff;
+        }
+        45%{
+            box-shadow: inset -0.8rem 0.1rem 5px #f0f,
+            inset 0.8rem -0.1rem 5px #0ff;
+        }
+        50% {
+            box-shadow: inset -1.0rem 0.0rem 5px #f0f,
+            inset 1.0rem 0.0rem 5px #0ff;
+        }
+        55%{
+            box-shadow: inset -0.8rem -0.1rem 5px #f0f,
+            inset 0.8rem 0.1rem 5px #0ff;
+        }
+        60%{
+            box-shadow: inset -0.6rem -0.2rem 5px #f0f,
+            inset 0.6rem 0.2rem 5px #0ff;
+        }
+        65%{
+            box-shadow: inset -0.4rem -0.3rem 5px #f0f,
+            inset 0.4rem 0.3rem 5px #0ff;
+        }
+        70%{
+            box-shadow: inset -0.2rem -0.4rem 5px #f0f,
+            inset 0.2rem 0.4rem 5px #0ff;
+        }
+        75%{
+            box-shadow: inset -0.0rem -0.5rem 5px #f0f,
+            inset 0.0rem 0.5rem 5px #0ff;
+        }
+        80%{
+            box-shadow: inset 0.2rem -0.4rem 5px #f0f,
+            inset -0.2rem 0.4rem 5px #0ff;
+        }
+        85%{
+            box-shadow: inset 0.4rem -0.3rem 5px #f0f,
+            inset -0.4rem 0.3rem 5px #0ff;
+        }
+        90%{
+            box-shadow: inset 0.6rem -0.2rem 5px #f0f,
+            inset -0.6rem 0.2rem 5px #0ff;
+        }
+        95%{
+            box-shadow: inset 0.8rem -0.1rem 5px #f0f,
+            inset -0.8rem 0.1rem 5px #0ff;
+        }
+        to{
+            box-shadow: inset 1.0rem 0.0rem 5px #f0f,
+            inset -1.0rem 0.0rem 5px #0ff;
         }
     }
 </style>
