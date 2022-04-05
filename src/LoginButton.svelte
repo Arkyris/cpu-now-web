@@ -12,6 +12,7 @@
     let ual;
     let toggleButtonInterval;
     let loginAnimationInterval;
+    let ual_button;
 
     onMount(() => {
         mounted();
@@ -50,19 +51,18 @@
     async function loadbutton() {
         console.log("Loading...");
         const session = await ual.init();
-        const ual_button = document.getElementById("ual-button");
+        ual_button = document.getElementById("ual-button");
         ual_button.innerText = "Wax Login";
         ual_button.style.backgroundColor = "#2d3148";
-        ual_button.style.color = "#000000";
+        ual_button.style.color = "#fff";
         ual_button.style.borderRadius = "25px";
         ual_button.style.width = "100px";
         ual_button.style.height = "50px";
         ual_button.style.animationName = "inherit";
-        ual_button.style.animationDuration = "2s";
+        ual_button.style.animationDuration = "4s";
         ual_button.style.animationIterationCount = "infinite";
-        //ual_button.style.boxShadow = `inset 0 0 4px #fff, inset ${$pHI}rem ${$pVI}rem 5px #f0f`;
-    } //, inset -10px 0 5px #0ff, inset 10px 0 10px #f0f, inset -10px 0 10px #0ff, 0 0 4px #fff, -10px 0 10px #f0f, 10px 0 10px #0ff
-
+        ual_button.style.textShadow = "0 0 1px #fff, 0 0 3px #f0f";
+    }
     const addLogoutButtonListener = () => {
         const logoutButton = document.getElementById("logout_button");
 
@@ -87,6 +87,7 @@
 <div class="button">
     <div id="login" />
     <button id="logout_button">Logout</button>
+    <div id={ual_button} class="ualbutton"></div>
 </div>
 
 <style>
@@ -111,92 +112,242 @@
         border-radius: 25px;
         animation-name: loginAnimation;
     }
-
+    button:hover{
+        color: #FFA600;
+        background-color: #0ff;
+    }
 
     @keyframes loginAnimation {
         from {
-            box-shadow: inset 1rem 0.0rem 5px #f0f,
-            inset -1.0rem 0.0rem 5px #0ff;
+            box-shadow:
+            inset 0 0 6px #fff,
+            0 0 6px #fff,
+            /*Pink and Blue In*/
+            inset 0.25rem 0.0rem 10px 4px #f0f,
+            inset -0.25rem 0.0rem 10px 4px #0ff,
+            /*Pink and Blue Out*/
+            -0.25rem 0.0rem 10px 6px #f0f,
+            0.25rem 0.0rem 10px 6px #0ff;
         }
         5%{
-            box-shadow: inset 0.8rem 0.1rem 5px #f0f,
-            inset -0.8rem -0.1rem 5px #0ff;
+            box-shadow:
+            inset 0 0 6px #fff,
+            0 0 6px #fff,
+            /*Pink and Blue In*/
+            inset 0.2rem 0.05rem 10px 4px #f0f,
+            inset -0.2rem -0.05rem 10px 4px #0ff,
+            /*Pink and Blue Out*/
+            -0.2rem -0.05rem 10px 6px #f0f,
+            0.2rem 0.05rem 10px 6px #0ff;
         }
         10%{
-            box-shadow: inset 0.6rem 0.2rem 5px #f0f,
-            inset -0.6rem -0.2rem 5px #0ff;
+            box-shadow:
+            inset 0 0 6px #fff,
+            0 0 6px #fff,
+            /*Pink and Blue In*/
+            inset 0.15rem 0.1rem 10px 4px #f0f,
+            inset -0.15rem -0.1rem 10px 4px #0ff,
+            /*Pink and Blue Out*/
+            -0.15rem -0.1rem 10px 6px #f0f,
+            0.15rem 0.1rem 10px 6px #0ff;
         }
         15%{
-            box-shadow: inset 0.4rem 0.3rem 5px #f0f,
-            inset -0.4rem -0.3rem 5px #0ff;
+            box-shadow:
+            inset 0 0 6px #fff,
+            0 0 6px #fff,
+            /*Pink and Blue In*/
+            inset 0.1rem 0.15rem 10px 4px #f0f,
+            inset -0.1rem -0.15rem 10px 4px #0ff,
+            /*Pink and Blue Out*/
+            -0.1rem -0.15rem 10px 6px #f0f,
+            0.1rem 0.15rem 10px 6px #0ff;
         }
         20%{
-            box-shadow: inset 0.2rem 0.4rem 5px #f0f,
-            inset -0.2rem -0.4rem 5px #0ff;
+            box-shadow:
+            inset 0 0 6px #fff,
+            0 0 6px #fff,
+            /*Pink and Blue In*/
+            inset 0.05rem 0.2rem 10px 4px #f0f,
+            inset -0.05rem -0.2rem 10px 4px #0ff,
+            /*Pink and Blue Out*/
+            -0.05rem -0.2rem 10px 6px #f0f,
+            0.05rem 0.2rem 10px 6px #0ff;
         }
         25%{
-            box-shadow: inset 0.0rem 0.5rem 5px #f0f,
-            inset -0.0rem -0.5rem 5px #0ff;
+            box-shadow:
+            inset 0 0 6px #fff,
+            0 0 6px #fff,
+            /*Pink and Blue In*/
+            inset 0.0rem 0.25rem 10px 4px #f0f,
+            inset 0.0rem -0.25rem 10px 4px #0ff,
+            /*Pink and Blue Out*/
+            0.0rem -0.25rem 10px 6px #f0f,
+            0.0rem 0.25rem 10px 6px #0ff;
         }
         30%{
-            box-shadow: inset -0.2rem 0.4rem 5px #f0f,
-            inset 0.2rem -0.4rem 5px #0ff;
+            box-shadow:
+            inset 0 0 6px #fff,
+            0 0 6px #fff,
+            /*Pink and Blue In*/
+            inset -0.05rem 0.2rem 10px 4px #f0f,
+            inset 0.05rem -0.2rem 10px 4px #0ff,
+            /*Pink and Blue Out*/
+            0.05rem -0.2rem 10px 6px #f0f,
+            -0.05rem 0.2rem 10px 6px #0ff;
         }
         35%{
-            box-shadow: inset -0.4rem 0.3rem 5px #f0f,
-            inset 0.4rem -0.3rem 5px #0ff;
+            box-shadow:
+            inset 0 0 6px #fff,
+            0 0 6px #fff,
+            /*Pink and Blue In*/
+            inset -0.1rem 0.15rem 10px 4px #f0f,
+            inset 0.1rem -0.15rem 10px 4px #0ff,
+            /*Pink and Blue Out*/
+            0.1rem -0.15rem 10px 6px #f0f,
+            -0.1rem 0.15rem 10px 6px #0ff;
         }
         40%{
-            box-shadow: inset -0.6rem 0.2rem 5px #f0f,
-            inset 0.6rem -0.2rem 5px #0ff;
+            box-shadow:
+            inset 0 0 6px #fff,
+            0 0 6px #fff,
+            /*Pink and Blue In*/
+            inset -0.15rem 0.1rem 10px 4px #f0f,
+            inset 0.15rem -0.1rem 10px 4px #0ff,
+            /*Pink and Blue Out*/
+            0.15rem -0.1rem 10px 6px #f0f,
+            -0.15rem 0.1rem 10px 6px #0ff;
         }
         45%{
-            box-shadow: inset -0.8rem 0.1rem 5px #f0f,
-            inset 0.8rem -0.1rem 5px #0ff;
+            box-shadow:
+            inset 0 0 6px #fff,
+            0 0 6px #fff,
+            /*Pink and Blue In*/
+            inset -0.2rem 0.05rem 10px 4px #f0f,
+            inset 0.2rem -0.05rem 10px 4px #0ff,
+            /*Pink and Blue Out*/
+            0.2rem -0.05rem 10px 6px #f0f,
+            -0.2rem 0.05rem 10px 6px #0ff;
         }
         50% {
-            box-shadow: inset -1.0rem 0.0rem 5px #f0f,
-            inset 1.0rem 0.0rem 5px #0ff;
+            box-shadow:
+            inset 0 0 6px #fff,
+            0 0 6px #fff,
+            /*Pink and Blue In*/
+            inset -0.25rem 0.0rem 10px 4px #f0f,
+            inset 0.25rem 0.0rem 10px 4px #0ff,
+            /*Pink and Blue Out*/
+            0.25rem 0.0rem 10px 6px #f0f,
+            -0.25rem 0.0rem 10px 6px #0ff;
         }
         55%{
-            box-shadow: inset -0.8rem -0.1rem 5px #f0f,
-            inset 0.8rem 0.1rem 5px #0ff;
+            box-shadow:
+            inset 0 0 6px #fff,
+            0 0 6px #fff,
+            /*Pink and Blue In*/
+             inset -0.2rem -0.05rem 10px 4px #f0f,
+            inset 0.2rem 0.05rem 10px 4px #0ff,
+            /*Pink and Blue Out*/
+            0.2rem 0.05rem 10px 6px #f0f,
+            -0.2rem -0.05rem 10px 6px #0ff;
         }
         60%{
-            box-shadow: inset -0.6rem -0.2rem 5px #f0f,
-            inset 0.6rem 0.2rem 5px #0ff;
+            box-shadow:
+            inset 0 0 6px #fff,
+            0 0 6px #fff,
+            /*Pink and Blue In*/
+            inset -0.15rem -0.1rem 10px 4px #f0f,
+            inset 0.15rem 0.1rem 10px 4px #0ff,
+            /*Pink and Blue Out*/
+            0.15rem 0.1rem 10px 6px #f0f,
+            -0.15rem -0.1rem 10px 6px #0ff;
         }
         65%{
-            box-shadow: inset -0.4rem -0.3rem 5px #f0f,
-            inset 0.4rem 0.3rem 5px #0ff;
+            box-shadow:
+            inset 0 0 6px #fff,
+            0 0 6px #fff,
+            /*Pink and Blue In*/
+            inset -0.1rem -0.15rem 10px 4px #f0f,
+            inset 0.1rem 0.15rem 10px 4px #0ff,
+            /*Pink and Blue Out*/
+            0.1rem 0.15rem 10px 6px #f0f,
+           -0.1rem -0.15rem 10px 6px #0ff;
         }
         70%{
-            box-shadow: inset -0.2rem -0.4rem 5px #f0f,
-            inset 0.2rem 0.4rem 5px #0ff;
+            box-shadow:
+            inset 0 0 6px #fff,
+            0 0 6px #fff,
+            /*Pink and Blue In*/
+            inset -0.05rem -0.2rem 10px 4px #f0f,
+            inset 0.05rem 0.2rem 10px 4px #0ff,
+            /*Pink and Blue Out*/
+            0.05rem 0.2rem 10px 6px #f0f,
+            -0.05rem -0.2rem 10px 6px #0ff;
         }
         75%{
-            box-shadow: inset -0.0rem -0.5rem 5px #f0f,
-            inset 0.0rem 0.5rem 5px #0ff;
+            box-shadow:
+            inset 0 0 6px #fff,
+            0 0 6px #fff,
+            /*Pink and Blue In*/
+            inset 0.0rem -0.25rem 10px 4px #f0f,
+            inset 0.0rem 0.25rem 10px 4px #0ff,
+            /*Pink and Blue Out*/
+            0.0rem 0.25rem 10px 6px #f0f,
+            0.0rem -0.25rem 10px 6px #0ff;
         }
         80%{
-            box-shadow: inset 0.2rem -0.4rem 5px #f0f,
-            inset -0.2rem 0.4rem 5px #0ff;
+            box-shadow:
+            inset 0 0 6px #fff,
+            0 0 6px #fff,
+            /*Pink and Blue In*/
+            inset 0.05rem -0.2rem 10px 4px #f0f,
+            inset -0.05rem 0.2rem 10px 4px #0ff,
+            /*Pink and Blue Out*/
+            -0.05rem 0.2rem 10px 6px #f0f,
+            0.05rem -0.2rem 10px 6px #0ff;
         }
         85%{
-            box-shadow: inset 0.4rem -0.3rem 5px #f0f,
-            inset -0.4rem 0.3rem 5px #0ff;
+            box-shadow:
+            inset 0 0 6px #fff,
+            0 0 6px #fff,
+            /*Pink and Blue In*/
+            inset 0.1rem -0.15rem 10px 4px #f0f,
+            inset -0.1rem 0.15rem 10px 4px #0ff,
+            /*Pink and Blue Out*/
+            -0.1rem 0.15rem 10px 6px #f0f,
+            0.1rem -0.15rem 10px 6px #0ff;
         }
         90%{
-            box-shadow: inset 0.6rem -0.2rem 5px #f0f,
-            inset -0.6rem 0.2rem 5px #0ff;
+            box-shadow:
+            inset 0 0 6px #fff,
+            0 0 6px #fff,
+            /*Pink and Blue In*/
+            inset 0.15rem -0.1rem 10px 4px #f0f,
+            inset -0.15rem 0.1rem 10px 4px #0ff,
+            /*Pink and Blue Out*/
+            -0.15rem 0.1rem 10px 6px #f0f,
+            0.15rem -0.1rem 10px 6px #0ff;
         }
         95%{
-            box-shadow: inset 0.8rem -0.1rem 5px #f0f,
-            inset -0.8rem 0.1rem 5px #0ff;
+            box-shadow:
+            inset 0 0 6px #fff,
+            0 0 6px #fff,
+            /*Pink and Blue In*/
+            inset 0.2rem -0.05rem 10px 4px #f0f,
+            inset -0.2rem 0.05rem 10px 4px #0ff,
+            /*Pink and Blue Out*/
+            -0.2rem 0.05rem 10px 6px #f0f,
+            0.2rem -0.05rem 10px 6px #0ff;
         }
         to{
-            box-shadow: inset 1.0rem 0.0rem 5px #f0f,
-            inset -1.0rem 0.0rem 5px #0ff;
+            box-shadow:
+            inset 0 0 6px #fff,
+            0 0 6px #fff,
+            /*Pink and Blue In*/
+            inset 0.25rem 0.0rem 10px 4px #f0f,
+            inset -0.25rem 0.0rem 10px 4px #0ff,
+            /*Pink and Blue Out*/
+            -0.25rem 0.0rem 10px 6px #f0f,
+            0.25rem 0.0rem 10px 6px #0ff;
         }
     }
 </style>
