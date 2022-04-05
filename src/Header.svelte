@@ -43,10 +43,14 @@
 <style>
     .header {
         position: relative;
-        background: #0b644b;
+        background: #000000;
         display: flex;
         width: 100%;
         height: 85px;
+        border-radius: 0 0 20px 20px;
+        margin-bottom: 30px;
+        box-shadow: 0 1px 5px #fff, 0 2px 10px 5px #0ff, 20px -10px 5px 10px #0ff, -20px -10px 5px 10px #0ff,
+         inset 0 -10px 5px -7px #fff, inset 0 -10px 10px -7px #0ff;
     }
     #p-transfer {
         position: absolute;

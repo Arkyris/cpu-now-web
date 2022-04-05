@@ -119,9 +119,9 @@
 <main>
     <div class="form-main-div">
         <div class="form-bg">
-            <div class="user-info">
+            <!--<div class="user-info">
                 <p>Account Funds: {$accountBalance}</p>
-            </div>
+            </div>-->
             <div class="form-div">
                 <form on:submit|preventDefault={onSubmit}>
                     <div class="input-div">
@@ -177,7 +177,7 @@
                             value="0.0"
                         />
                     </div>
-                    <button type="submit"
+                    <button id="submit_button" type="submit"
                         >{actionVal === "rent" || actionVal === "add-rent"
                             ? `${cost.toFixed(8)} WAX`
                             : `${amountVal} WAX`}</button
@@ -191,43 +191,48 @@
 <style>
     .form-main-div {
         position: relative;
+        display: flex;
+        justify-content: center;
         width: 100%;
         height: 400px;
     }
     .form-bg {
-        position: absolute;
-        width: 95%;
-        height: 95%;
-        left: 2.5%;
-        top: 2.5%;
-        background-color: rgba(128, 0, 182, 0.25);
+        position: relative;
+        display: flex;
+        justify-content: center;
+        width: 450px;
+        height: 380px;
+        background-color: rgba(0, 0, 0, 0.122);
+        border-radius: 30px;
+        box-shadow: 0px -0px 5px 10px #0ff;
     }
     label {
         color: aquamarine;
     }
     .form-div {
-        position: absolute;
-        display: flex;
-        flex-direction: row;
-        widows: 50%;
-        right: 12.5%;
+        position: relative;
+        width: auto;
+
     }
     .user-info {
         position: absolute;
-        display: flex;
-        flex-direction: row;
         color: aquamarine;
         width: 50%;
-        left: 12.5%;
     }
     .input-div {
+        position: relative;
         padding: 10px;
-        margin: 5px;
+        margin-top: 10px;
         border-style: solid;
         border-width: 2px;
         border-color: black;
+        width: auto;
     }
     #amount_div {
         display: none;
+    }
+
+    #submit_button{
+        margin: 10;
     }
 </style>

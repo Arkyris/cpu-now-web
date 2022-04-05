@@ -13,6 +13,7 @@
 <style>
 	main {
 		text-align: center;
+		background-color: rgb(23, 23, 23);
 	}
 
 	@media (min-width: 640px) {
