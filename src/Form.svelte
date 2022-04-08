@@ -64,14 +64,14 @@
             $acctName,
             $accountBalance,
             data,
-            cost,
+            cost
         );
 
-        //loggedInUser.signTransaction(builtActions, {
-        //    blocksBehind: 3,
-        //    expireSeconds: 30,
-        //    broadcast: true,
-        //});
+        loggedInUser.signTransaction(builtActions, {
+            blocksBehind: 3,
+            expireSeconds: 30,
+            broadcast: true,
+        });
     }
 
     async function getContractCost() {
@@ -125,12 +125,14 @@
             <div class="form-div">
                 <form on:submit|preventDefault={onSubmit}>
                     <div class="input-div">
-                        <label for="action">Action:</label>
+                        <label for="action">Action</label>
                         <select id="action" name="action">
                             <option value="rent">Rent</option>
                             <option value="add-rent">Add Rent</option>
                             <option value="add-balance">Add Funds</option>
-                            <option value="withdraw-funds">Withdraw Funds</option>
+                            <option value="withdraw-funds"
+                                >Withdraw Funds</option
+                            >
                             <!--<option value="loan">Loan</option>
                             <option value="add-loan">Add Loan</option>-->
                         </select>
@@ -189,30 +191,38 @@
 </main>
 
 <style>
+    @import url("https://fonts.googleapis.com/css2?family=Neonderthaw&display=swap");
     .form-main-div {
+        background-color: #000;
         position: relative;
         display: flex;
         justify-content: center;
         width: 100%;
-        height: 400px;
+        height: auto;
+        margin-top: 200px;
+        bottom: 50px;
     }
     .form-bg {
         position: relative;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         width: 450px;
-        height: 380px;
-        background-color: rgba(0, 0, 0, 0.122);
+        height: 550px;
+        background-color: black;
         border-radius: 30px;
-        box-shadow: 0px -0px 5px 10px #0ff;
+        box-shadow: 0 0 1px #fff, 0 0px 3px #fff, 0 0px 5px #fff,
+            0 0px 15px #0ff, 0px 0px 10px #0ff, 0px 0px 5px #0ff,
+            0 0px 20px #0ff, 0 0px 25px #0ff, inset 0 0px 3px #fff,
+            inset 0 0px 5px #fff, inset 0 0px 8px #fff, inset 0 0px 10px #0ff;
     }
-    label {
-        color: aquamarine;
-    }
+
     .form-div {
         position: relative;
+        display: flex;
+        justify-content: center;
         width: auto;
-
+        height: auto;
     }
     .user-info {
         position: absolute;
@@ -222,17 +232,31 @@
     .input-div {
         position: relative;
         padding: 10px;
-        margin-top: 10px;
+        margin: 30px;
         border-style: solid;
-        border-width: 2px;
-        border-color: black;
+        border-width: 1px;
+        border-color: #fff;
+        border-radius: 20px;
         width: auto;
+        box-shadow: 0 0 5px #fff, 0 0 8px #fff, 0 0 5px #8080ff,
+            0 0 10px #8080ff, 0 0 15px #8080ff, 0 0 20px #8080ff,
+            inset 0 0 3px #fff, 0 0 6px #fff, 0 0 3px #8080ff, 0 0 6px #8080ff,
+            0 0 9px #8080ff;
     }
     #amount_div {
         display: none;
     }
 
-    #submit_button{
-        margin: 10;
+    #submit_button {
+        margin: 10px;
+    }
+    label {
+        font-family: "neoncity";
+        font-size: 30px;
+        font-weight: 50;
+        letter-spacing: 4px;
+        color: white;
+        text-shadow: 0 0 5px #fff, 0 0 2px #fff, 0 0 1px #fff, 0 0 20px #f0f,
+            0 0 15px #f0f, 0 0 10px #f0f, 0 0 5px #f0f;
     }
 </style>
