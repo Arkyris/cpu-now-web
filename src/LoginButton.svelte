@@ -53,7 +53,7 @@
         const session = await ual.init();
         ual_button = document.getElementById("ual-button");
         ual_button.innerText = "Wax Login";
-        ual_button.style.backgroundColor = "#2d3148";
+        ual_button.style.backgroundColor = "#000";
         ual_button.style.color = "#fff";
         ual_button.style.borderRadius = "25px";
         ual_button.style.width = "100px";
@@ -61,7 +61,9 @@
         ual_button.style.animationName = "inherit";
         ual_button.style.animationDuration = "4s";
         ual_button.style.animationIterationCount = "infinite";
-        ual_button.style.textShadow = "0 0 1px #fff, 0 0 3px #f0f";
+        ual_button.style.textShadow = "0 0 1px #FFA600, 0 0 3px #FFA600, 0 0 5px #FFA600, 0 0 10px #FFA600";
+        ual_button.style.fontFamily = "neoncity";
+        ual_button.style.fontSize = "20px"
     }
     const addLogoutButtonListener = () => {
         const logoutButton = document.getElementById("logout_button");
