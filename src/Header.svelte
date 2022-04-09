@@ -35,7 +35,7 @@
 
 <header class="header">
     <p id="p-transfer">Welcome {$acctName}:<br />{$walletBalance}</p>
-    <div class="header-div">
+    <div class="inner_header_div">
         <LoginButton />
     </div>
 </header>
@@ -45,10 +45,10 @@
         position: relative;
         background-color: #000000;
         display: flex;
+        z-index: 999;
         width: 100%;
-        height: 85px;
+        height: 100%;
         border-radius: 0 0 20px 20px;
-        margin-bottom: 30px;
         box-shadow: 0 1px 5px #fff, 0 2px 10px 5px #0ff, 20px -10px 5px 10px #0ff, -20px -10px 5px 10px #0ff,
          inset 0 -10px 3px -7px #fff, inset 0 -10px 10px -7px #0ff, inset 0 -10px 15px -9px #0ff;
     }
@@ -60,7 +60,7 @@
         top: 21px;
         margin: 0px;
     }
-    .header-div {
+    .inner_header_div {
         background-color: #000;
         position: absolute;
         flex-direction: row;

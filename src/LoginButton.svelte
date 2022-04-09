@@ -64,6 +64,8 @@
         ual_button.style.textShadow = "0 0 1px #FFA600, 0 0 3px #FFA600, 0 0 5px #FFA600, 0 0 10px #FFA600";
         ual_button.style.fontFamily = "neoncity";
         ual_button.style.fontSize = "20px"
+        ual_button.style.border = "10px";
+        ual_button.style.borderColor = "#fff";
     }
     const addLogoutButtonListener = () => {
         const logoutButton = document.getElementById("logout_button");
