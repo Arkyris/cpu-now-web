@@ -9,6 +9,8 @@
     } from "./stores/current_user";
     import { myChain } from "./stores/chainInfo";
 
+    export let links = [];
+
     onMount(() => {
         $walletBalanceUpdateInterval = setInterval(updateWalletBalance, 1000);
     });
@@ -34,6 +36,9 @@
 </script>
 
 <header class="header">
+    {#each links as link}
+    <a href={link.url}>{link.title}</a>
+    {/each}
     <p id="p-transfer">Welcome {$acctName}:<br />{$walletBalance}</p>
     <div class="inner_header_div">
         <LoginButton />
@@ -56,16 +61,35 @@
         position: absolute;
         flex-direction: row;
         color: aquamarine;
-        right: 150px;
-        top: 21px;
+        right: 13vw;
+        top: 1.5vh;
         margin: 0px;
     }
     .inner_header_div {
         background-color: #000;
         position: absolute;
         flex-direction: row;
-        right: 18px;
-        top: 15px;
-        margin: 0px;
+        right: 1.5vw;
+        top: 1.6vh;
+    }
+    a{
+        position: relative;
+        color: #fff;
+        font-family: "neoncity";
+        font-size: 2.5vw;
+        margin-right: 1.5vw;
+        padding: .75vw;
+        height: 3vh;
+        line-height: 3.5vh;
+        text-align: center;
+        border-style: solid;
+        border-color: #fff;
+        border-width: .1vh;
+        border-radius: 2.5vh;
+        top: 1.5vh;
+        left: 1.5vh;
+        text-shadow: 0 0 .5vh #fff, 0 0 1vh #fff, 0 0 1vh #0ff, 0 0 2vh #0ff, 0 0 4vh #0ff, 0 0 5vh #0ff;
+        box-shadow: 0 0 .5vh #fff, 0 0 1vh #fff, 0 0 1vh #f0f, 0 0 2vh #f0f, 0 0 3vh #f0f, inset 0 0 .5vh #fff, inset 0 0 1vh #f0f, inset 0 0 2vh #f0f;
+
     }
 </style>
