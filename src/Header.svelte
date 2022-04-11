@@ -9,6 +9,8 @@
     } from "./stores/current_user";
     import { myChain } from "./stores/chainInfo";
 
+    export let links = [];
+
     onMount(() => {
         $walletBalanceUpdateInterval = setInterval(updateWalletBalance, 1000);
     });
@@ -34,8 +36,11 @@
 </script>
 
 <header class="header">
+    {#each links as link}
+    <a href={link.url}>{link.title}</a>
+    {/each}
     <p id="p-transfer">Welcome {$acctName}:<br />{$walletBalance}</p>
-    <div class="header-div">
+    <div class="inner_header_div">
         <LoginButton />
     </div>
 </header>
@@ -45,10 +50,10 @@
         position: relative;
         background-color: #000000;
         display: flex;
+        z-index: 999;
         width: 100%;
-        height: 85px;
+        height: 100%;
         border-radius: 0 0 20px 20px;
-        margin-bottom: 30px;
         box-shadow: 0 1px 5px #fff, 0 2px 10px 5px #0ff, 20px -10px 5px 10px #0ff, -20px -10px 5px 10px #0ff,
          inset 0 -10px 3px -7px #fff, inset 0 -10px 10px -7px #0ff, inset 0 -10px 15px -9px #0ff;
     }
@@ -56,16 +61,35 @@
         position: absolute;
         flex-direction: row;
         color: aquamarine;
-        right: 150px;
-        top: 21px;
+        right: 13vw;
+        top: 1.5vh;
         margin: 0px;
     }
-    .header-div {
+    .inner_header_div {
         background-color: #000;
         position: absolute;
         flex-direction: row;
-        right: 18px;
-        top: 15px;
-        margin: 0px;
+        right: 1.5vw;
+        top: 1.6vh;
+    }
+    a{
+        position: relative;
+        color: #fff;
+        font-family: "neoncity";
+        font-size: 2.5vw;
+        margin-right: 1.5vw;
+        padding: .75vw;
+        height: 3vh;
+        line-height: 3.5vh;
+        text-align: center;
+        border-style: solid;
+        border-color: #fff;
+        border-width: .1vh;
+        border-radius: 2.5vh;
+        top: 1.5vh;
+        left: 1.5vh;
+        text-shadow: 0 0 .5vh #fff, 0 0 1vh #fff, 0 0 1vh #0ff, 0 0 2vh #0ff, 0 0 4vh #0ff, 0 0 5vh #0ff;
+        box-shadow: 0 0 .5vh #fff, 0 0 1vh #fff, 0 0 1vh #f0f, 0 0 2vh #f0f, 0 0 3vh #f0f, inset 0 0 .5vh #fff, inset 0 0 1vh #f0f, inset 0 0 2vh #f0f;
+
     }
 </style>
