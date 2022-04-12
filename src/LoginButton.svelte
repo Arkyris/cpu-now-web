@@ -55,15 +55,21 @@
         ual_button.innerText = "Wax Login";
         ual_button.style.backgroundColor = "#000";
         ual_button.style.color = "#fff";
-        ual_button.style.borderRadius = "25px";
-        ual_button.style.width = "100px";
-        ual_button.style.height = "50px";
+        ual_button.style.borderRadius = "2.5vh";
+        ual_button.style.width = "8vw";
+        ual_button.style.height = "5vh";
         ual_button.style.animationName = "inherit";
         ual_button.style.animationDuration = "4s";
         ual_button.style.animationIterationCount = "infinite";
         ual_button.style.textShadow = "0 0 1px #FFA600, 0 0 3px #FFA600, 0 0 5px #FFA600, 0 0 10px #FFA600";
         ual_button.style.fontFamily = "neoncity";
-        ual_button.style.fontSize = "20px"
+        ual_button.style.fontSize = "1.5vw";
+        ual_button.style.borderStyle = "solid";
+        ual_button.style.border = "5vw";
+        ual_button.style.borderColor = "#fff";
+        ual_button.style.lineHeight = "1vh";
+        ual_button.style.minHeight = "0";
+        ual_button.style.minWidth = "0";
     }
     const addLogoutButtonListener = () => {
         const logoutButton = document.getElementById("logout_button");
@@ -102,21 +108,14 @@
         border-color: #000000;
         color: aquamarine;
         text-align: center;
-        border-radius: 5px;
-        width: 100px;
-        height: 50px;
+        border-radius: 2.5vh;
+        width: 8vw;
+        height: 5vh;
         display: none;
-        margin: 0px;
     }
     #login {
-        background-color: #2d3148;
-        margin: 0px;
-        border-radius: 25px;
+        border-radius: 2.5vh;
         animation-name: loginAnimation;
-    }
-    button:hover{
-        color: #FFA600;
-        background-color: #0ff;
     }
 
     @keyframes loginAnimation {
@@ -125,10 +124,10 @@
             inset 0 0 6px #fff,
             0 0 6px #fff,
             /*Pink and Blue In*/
-            inset 0.25rem 0.0rem 10px 4px #f0f,
+            inset 0.25rem 0.0rem 10px 2px #f0f,
             inset -0.25rem 0.0rem 10px 4px #0ff,
             /*Pink and Blue Out*/
-            -0.25rem 0.0rem 10px 6px #f0f,
+            -0.25rem 0.0rem 10px 2px #f0f,
             0.25rem 0.0rem 10px 6px #0ff;
         }
         5%{
@@ -136,10 +135,10 @@
             inset 0 0 6px #fff,
             0 0 6px #fff,
             /*Pink and Blue In*/
-            inset 0.2rem 0.05rem 10px 4px #f0f,
+            inset 0.2rem 0.05rem 10px 2px #f0f,
             inset -0.2rem -0.05rem 10px 4px #0ff,
             /*Pink and Blue Out*/
-            -0.2rem -0.05rem 10px 6px #f0f,
+            -0.2rem -0.05rem 10px 2px #f0f,
             0.2rem 0.05rem 10px 6px #0ff;
         }
         10%{
@@ -147,10 +146,10 @@
             inset 0 0 6px #fff,
             0 0 6px #fff,
             /*Pink and Blue In*/
-            inset 0.15rem 0.1rem 10px 4px #f0f,
+            inset 0.15rem 0.1rem 10px 2px #f0f,
             inset -0.15rem -0.1rem 10px 4px #0ff,
             /*Pink and Blue Out*/
-            -0.15rem -0.1rem 10px 6px #f0f,
+            -0.15rem -0.1rem 10px 2px #f0f,
             0.15rem 0.1rem 10px 6px #0ff;
         }
         15%{
@@ -158,10 +157,10 @@
             inset 0 0 6px #fff,
             0 0 6px #fff,
             /*Pink and Blue In*/
-            inset 0.1rem 0.15rem 10px 4px #f0f,
+            inset 0.1rem 0.15rem 10px 2px #f0f,
             inset -0.1rem -0.15rem 10px 4px #0ff,
             /*Pink and Blue Out*/
-            -0.1rem -0.15rem 10px 6px #f0f,
+            -0.1rem -0.15rem 10px 2px #f0f,
             0.1rem 0.15rem 10px 6px #0ff;
         }
         20%{
@@ -169,10 +168,10 @@
             inset 0 0 6px #fff,
             0 0 6px #fff,
             /*Pink and Blue In*/
-            inset 0.05rem 0.2rem 10px 4px #f0f,
+            inset 0.05rem 0.2rem 10px 2px #f0f,
             inset -0.05rem -0.2rem 10px 4px #0ff,
             /*Pink and Blue Out*/
-            -0.05rem -0.2rem 10px 6px #f0f,
+            -0.05rem -0.2rem 10px 2px #f0f,
             0.05rem 0.2rem 10px 6px #0ff;
         }
         25%{
@@ -180,10 +179,10 @@
             inset 0 0 6px #fff,
             0 0 6px #fff,
             /*Pink and Blue In*/
-            inset 0.0rem 0.25rem 10px 4px #f0f,
+            inset 0.0rem 0.25rem 10px 2px #f0f,
             inset 0.0rem -0.25rem 10px 4px #0ff,
             /*Pink and Blue Out*/
-            0.0rem -0.25rem 10px 6px #f0f,
+            0.0rem -0.25rem 10px 2px #f0f,
             0.0rem 0.25rem 10px 6px #0ff;
         }
         30%{
@@ -191,10 +190,10 @@
             inset 0 0 6px #fff,
             0 0 6px #fff,
             /*Pink and Blue In*/
-            inset -0.05rem 0.2rem 10px 4px #f0f,
+            inset -0.05rem 0.2rem 10px 2px #f0f,
             inset 0.05rem -0.2rem 10px 4px #0ff,
             /*Pink and Blue Out*/
-            0.05rem -0.2rem 10px 6px #f0f,
+            0.05rem -0.2rem 10px 2px #f0f,
             -0.05rem 0.2rem 10px 6px #0ff;
         }
         35%{
@@ -202,10 +201,10 @@
             inset 0 0 6px #fff,
             0 0 6px #fff,
             /*Pink and Blue In*/
-            inset -0.1rem 0.15rem 10px 4px #f0f,
+            inset -0.1rem 0.15rem 10px 2px #f0f,
             inset 0.1rem -0.15rem 10px 4px #0ff,
             /*Pink and Blue Out*/
-            0.1rem -0.15rem 10px 6px #f0f,
+            0.1rem -0.15rem 10px 2px #f0f,
             -0.1rem 0.15rem 10px 6px #0ff;
         }
         40%{
@@ -213,10 +212,10 @@
             inset 0 0 6px #fff,
             0 0 6px #fff,
             /*Pink and Blue In*/
-            inset -0.15rem 0.1rem 10px 4px #f0f,
+            inset -0.15rem 0.1rem 10px 2px #f0f,
             inset 0.15rem -0.1rem 10px 4px #0ff,
             /*Pink and Blue Out*/
-            0.15rem -0.1rem 10px 6px #f0f,
+            0.15rem -0.1rem 10px 2px #f0f,
             -0.15rem 0.1rem 10px 6px #0ff;
         }
         45%{
@@ -224,10 +223,10 @@
             inset 0 0 6px #fff,
             0 0 6px #fff,
             /*Pink and Blue In*/
-            inset -0.2rem 0.05rem 10px 4px #f0f,
+            inset -0.2rem 0.05rem 10px 2px #f0f,
             inset 0.2rem -0.05rem 10px 4px #0ff,
             /*Pink and Blue Out*/
-            0.2rem -0.05rem 10px 6px #f0f,
+            0.2rem -0.05rem 10px 2px #f0f,
             -0.2rem 0.05rem 10px 6px #0ff;
         }
         50% {
@@ -235,10 +234,10 @@
             inset 0 0 6px #fff,
             0 0 6px #fff,
             /*Pink and Blue In*/
-            inset -0.25rem 0.0rem 10px 4px #f0f,
+            inset -0.25rem 0.0rem 10px 2px #f0f,
             inset 0.25rem 0.0rem 10px 4px #0ff,
             /*Pink and Blue Out*/
-            0.25rem 0.0rem 10px 6px #f0f,
+            0.25rem 0.0rem 10px 2px #f0f,
             -0.25rem 0.0rem 10px 6px #0ff;
         }
         55%{
@@ -246,10 +245,10 @@
             inset 0 0 6px #fff,
             0 0 6px #fff,
             /*Pink and Blue In*/
-             inset -0.2rem -0.05rem 10px 4px #f0f,
+             inset -0.2rem -0.05rem 10px 2px #f0f,
             inset 0.2rem 0.05rem 10px 4px #0ff,
             /*Pink and Blue Out*/
-            0.2rem 0.05rem 10px 6px #f0f,
+            0.2rem 0.05rem 10px 2px #f0f,
             -0.2rem -0.05rem 10px 6px #0ff;
         }
         60%{
@@ -257,10 +256,10 @@
             inset 0 0 6px #fff,
             0 0 6px #fff,
             /*Pink and Blue In*/
-            inset -0.15rem -0.1rem 10px 4px #f0f,
+            inset -0.15rem -0.1rem 10px 2px #f0f,
             inset 0.15rem 0.1rem 10px 4px #0ff,
             /*Pink and Blue Out*/
-            0.15rem 0.1rem 10px 6px #f0f,
+            0.15rem 0.1rem 10px 2px #f0f,
             -0.15rem -0.1rem 10px 6px #0ff;
         }
         65%{
@@ -268,10 +267,10 @@
             inset 0 0 6px #fff,
             0 0 6px #fff,
             /*Pink and Blue In*/
-            inset -0.1rem -0.15rem 10px 4px #f0f,
+            inset -0.1rem -0.15rem 10px 2px #f0f,
             inset 0.1rem 0.15rem 10px 4px #0ff,
             /*Pink and Blue Out*/
-            0.1rem 0.15rem 10px 6px #f0f,
+            0.1rem 0.15rem 10px 2px #f0f,
            -0.1rem -0.15rem 10px 6px #0ff;
         }
         70%{
@@ -279,10 +278,10 @@
             inset 0 0 6px #fff,
             0 0 6px #fff,
             /*Pink and Blue In*/
-            inset -0.05rem -0.2rem 10px 4px #f0f,
+            inset -0.05rem -0.2rem 10px 2px #f0f,
             inset 0.05rem 0.2rem 10px 4px #0ff,
             /*Pink and Blue Out*/
-            0.05rem 0.2rem 10px 6px #f0f,
+            0.05rem 0.2rem 10px 2px #f0f,
             -0.05rem -0.2rem 10px 6px #0ff;
         }
         75%{
@@ -290,10 +289,10 @@
             inset 0 0 6px #fff,
             0 0 6px #fff,
             /*Pink and Blue In*/
-            inset 0.0rem -0.25rem 10px 4px #f0f,
+            inset 0.0rem -0.25rem 10px 2px #f0f,
             inset 0.0rem 0.25rem 10px 4px #0ff,
             /*Pink and Blue Out*/
-            0.0rem 0.25rem 10px 6px #f0f,
+            0.0rem 0.25rem 10px 2px #f0f,
             0.0rem -0.25rem 10px 6px #0ff;
         }
         80%{
@@ -301,10 +300,10 @@
             inset 0 0 6px #fff,
             0 0 6px #fff,
             /*Pink and Blue In*/
-            inset 0.05rem -0.2rem 10px 4px #f0f,
+            inset 0.05rem -0.2rem 10px 2px #f0f,
             inset -0.05rem 0.2rem 10px 4px #0ff,
             /*Pink and Blue Out*/
-            -0.05rem 0.2rem 10px 6px #f0f,
+            -0.05rem 0.2rem 10px 2px #f0f,
             0.05rem -0.2rem 10px 6px #0ff;
         }
         85%{
@@ -312,10 +311,10 @@
             inset 0 0 6px #fff,
             0 0 6px #fff,
             /*Pink and Blue In*/
-            inset 0.1rem -0.15rem 10px 4px #f0f,
+            inset 0.1rem -0.15rem 10px 2px #f0f,
             inset -0.1rem 0.15rem 10px 4px #0ff,
             /*Pink and Blue Out*/
-            -0.1rem 0.15rem 10px 6px #f0f,
+            -0.1rem 0.15rem 10px 2px #f0f,
             0.1rem -0.15rem 10px 6px #0ff;
         }
         90%{
@@ -323,10 +322,10 @@
             inset 0 0 6px #fff,
             0 0 6px #fff,
             /*Pink and Blue In*/
-            inset 0.15rem -0.1rem 10px 4px #f0f,
+            inset 0.15rem -0.1rem 10px 2px #f0f,
             inset -0.15rem 0.1rem 10px 4px #0ff,
             /*Pink and Blue Out*/
-            -0.15rem 0.1rem 10px 6px #f0f,
+            -0.15rem 0.1rem 10px 2px #f0f,
             0.15rem -0.1rem 10px 6px #0ff;
         }
         95%{
@@ -334,10 +333,10 @@
             inset 0 0 6px #fff,
             0 0 6px #fff,
             /*Pink and Blue In*/
-            inset 0.2rem -0.05rem 10px 4px #f0f,
+            inset 0.2rem -0.05rem 10px 2px #f0f,
             inset -0.2rem 0.05rem 10px 4px #0ff,
             /*Pink and Blue Out*/
-            -0.2rem 0.05rem 10px 6px #f0f,
+            -0.2rem 0.05rem 10px 2px #f0f,
             0.2rem -0.05rem 10px 6px #0ff;
         }
         to{
@@ -345,10 +344,10 @@
             inset 0 0 6px #fff,
             0 0 6px #fff,
             /*Pink and Blue In*/
-            inset 0.25rem 0.0rem 10px 4px #f0f,
+            inset 0.25rem 0.0rem 10px 2px #f0f,
             inset -0.25rem 0.0rem 10px 4px #0ff,
             /*Pink and Blue Out*/
-            -0.25rem 0.0rem 10px 6px #f0f,
+            -0.25rem 0.0rem 10px 2px #f0f,
             0.25rem 0.0rem 10px 6px #0ff;
         }
     }
