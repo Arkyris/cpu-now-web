@@ -88,8 +88,8 @@
         border-radius: 2.5vh;
         top: 1.5vh;
         left: 1.5vh;
-        text-shadow: 0 0 .5vh #fff, 0 0 1vh #fff, 0 0 1vh #0ff, 0 0 2vh #0ff, 0 0 4vh #0ff, 0 0 5vh #0ff;
-        box-shadow: 0 0 .5vh #fff, 0 0 1vh #fff, 0 0 1vh #f0f, 0 0 2vh #f0f, 0 0 3vh #f0f, inset 0 0 .5vh #fff, inset 0 0 1vh #f0f, inset 0 0 2vh #f0f;
+        text-shadow: 0 0 .5vh #fff, 0 0 1vh #fff, 0 0 1vh #f0f, 0 0 2vh #f0f, 0 0 4vh #f0f, 0 0 5vh #f0f;
+        box-shadow: 0 0 .5vh #fff, 0 0 1vh #fff, 0 0 1vh #8080ff, 0 0 2vh #8080ff, 0 0 3vh #8080ff, inset 0 0 .5vh #fff, inset 0 0 1vh #8080ff, inset 0 0 2vh #8080ff;
 
     }
 </style>
