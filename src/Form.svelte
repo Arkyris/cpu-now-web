@@ -194,10 +194,11 @@
         justify-content: center;
         width: auto;
         height: auto;
-        border-radius: 30px;
+        border-radius: 3vh;
         box-shadow: 0 0 1px #fff, 0 0px 3px #fff, 0 0px 5px #fff,
-            0 0px 10px #0ff, 0px 0px 15px #0ff, 0 0px 20px #0ff, 0 0px 25px #0ff, inset 0 0px 3px #fff,
-            inset 0 0px 5px #fff, inset 0 0px 8px #fff, inset 0 0px 10px #0ff;
+            0 0px 10px #0ff, 0px 0px 15px #0ff, 0 0px 20px #0ff, 0 0px 25px #0ff,
+            inset 0 0px 3px #fff, inset 0 0px 5px #fff, inset 0 0px 8px #fff,
+            inset 0 0px 10px #0ff;
     }
 
     .form-div {
@@ -216,14 +217,14 @@
         z-index: 100;
         position: relative;
         padding: 1vh;
-        margin-top: 3.5vh;
-        margin-bottom: 3.5vh;
+        margin-top: 3vh;
+        margin-bottom: 2.5vh;
         margin-left: 13vh;
         margin-right: 13vh;
         border-style: solid;
-        border-width: 1px;
+        border-width: .1vh;
         border-color: #fff;
-        border-radius: 20px;
+        border-radius: 2vh;
         width: auto;
         box-shadow: 0 0 5px #fff, 0 0 8px #fff, 0 0 5px #8080ff,
             0 0 10px #8080ff, 0 0 15px #8080ff, 0 0 20px #8080ff,
@@ -235,23 +236,26 @@
     }
 
     #submit_button {
-        margin-bottom: 20px;
-        padding: 10px;
+        margin-bottom: 2vh;
+        padding: 1vh;
         background-color: #000;
-        color: #fff;
-        font-size: 15px;
-        border-radius: 10px;
+        color: rgb(205, 251, 255);
+        text-shadow: 0 0 1vh #fff;
+        font-size: 2vh;
+        border-radius: 1vh;
         border: #fff;
         border-style: solid;
         border-width: 1px;
     }
-    #submit_button:hover{
+    #submit_button:hover {
         border-color: #fff;
-        box-shadow: 0 0 3px #fff, 0 0 6px #fff, 0 0 5px #f0f, 0 0 10px #f0f, 0 0 15px #f0f, inset 0 0 2px #fff, inset 0 0 4px #fff, inset 0 0 3px #f0f, inset 0 0 6px #f0f;
+        box-shadow: 0 0 3px #fff, 0 0 6px #fff, 0 0 5px #f0f, 0 0 10px #f0f,
+            0 0 15px #f0f, inset 0 0 2px #fff, inset 0 0 4px #fff,
+            inset 0 0 3px #f0f, inset 0 0 6px #f0f;
     }
     label {
         font-family: "neoncity";
-        font-size: 7vh;
+        font-size: 6vh;
         font-weight: 50;
         letter-spacing: 4px;
         color: white;
@@ -271,31 +275,104 @@
         text-align: center;
     }
     input[type="range"] {
-        height: 23px;
+        height: 3vh;
         -webkit-appearance: none;
-        margin: 10px 0;
+        margin: 0;
         width: 75%;
     }
     input[type="range"]:focus {
         outline: none;
     }
     input[type="range"]::-webkit-slider-runnable-track {
-        height: 10px;
+        height: 2vh;
         cursor: pointer;
         box-shadow: 0 0 10px #0ff, inset 0 0 5px #0ff;
         background: #000000;
-        border-radius: 5px;
+        border-radius: 1vh;
         border: 1px solid #fff;
     }
     input[type="range"]::-webkit-slider-thumb {
         box-shadow: 0 0 10px #f0f, inset 0 0 5px #f0f;
         border: 1px solid #fff;
-        height: 15px;
-        width: 15px;
-        border-radius: 13px;
+        height: 3vh;
+        width: 3vh;
+        border-radius: 3vh;
         background: #000;
         cursor: pointer;
         -webkit-appearance: none;
-        margin-top: -3.5px;
+        margin-top: -0.6vh;
+    }
+
+    input[type="number"] {
+        -webkit-appearance: textfield;
+        -moz-appearance: textfield;
+        appearance: textfield;
+        width: 40%;
+        font-size: 2vh;
+        color: rgb(205, 251, 255);
+        text-shadow: 0 0 1vh #fff;
+    }
+    input[type="number"]::-webkit-inner-spin-button {
+        background-color: #000;
+    }
+    input[type="number"]::-webkit-outer-spin-button {
+        background-color: #000;
+    }
+    input[type="number"]:focus {
+        box-shadow: 0 0 1vh #fff, 0 0 2vh #fff, 0 0 2vh #0ff, 0 0 3vh #0ff,
+            0 0 4vh #0ff;
+    }
+    input[type="float"]:focus {
+        box-shadow: 0 0 1vh #fff, 0 0 2vh #fff, 0 0 2vh #0ff, 0 0 3vh #0ff,
+            0 0 4vh #0ff;
+    }
+    input[type="text"]:focus {
+        box-shadow: 0 0 1vh #fff, 0 0 2vh #fff, 0 0 2vh #0ff, 0 0 3vh #0ff,
+            0 0 4vh #0ff;
+    }
+    #action:focus {
+        box-shadow: 0 0 1vh #fff, 0 0 2vh #fff, 0 0 2vh #0ff, 0 0 3vh #0ff,
+            0 0 4vh #0ff;
+    }
+    input[type="text"] {
+        width: 40%;
+        font-size: 2vh;
+        color: rgb(205, 251, 255);
+        text-shadow: 0 0 1vh #fff;
+        background-color: #000;
+    }
+    input[type="text"]::placeholder{
+        color: rgba(185, 185, 185, 0.462);
+        text-shadow: 0 0 0 #000;
+    }
+    select {
+        width: auto;
+        font-size: 2vh;
+        color: rgb(205, 251, 255);
+        text-shadow: 0 0 1vh #fff;
+    }
+    input[type="float"] {
+        font-size: 2vh;
+        color: rgb(205, 251, 255);
+        text-shadow: 0 0 1vh #fff;
+    }
+    input:-internal-autofill-selected {
+        background-color: #000;
+        font-size: 2vh;
+        color: rgb(205, 251, 255);
+        text-shadow: 0 0 1vh #fff;
+    }
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus input:-webkit-autofill,
+    textarea:-webkit-autofill,
+    textarea:-webkit-autofill:hover textarea:-webkit-autofill:focus,
+    select:-webkit-autofill,
+    select:-webkit-autofill:hover,
+    select:-webkit-autofill:focus {
+        border: 1px solid #fff;
+        -webkit-text-fill-color: #fff;
+        font-size: 2vh;
+        transition: background-color 5000s ease-in-out 0s;
     }
 </style>

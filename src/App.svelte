@@ -1,11 +1,22 @@
 <script>
 	import Header from "./Header.svelte";
 	import Form from "./Form.svelte";
+	import About from "./About.svelte";
+	import HowTo from "./HowTo.svelte";
+	import FAQ from "./FAQ.svelte";
+	import Footer from "./Footer.svelte";
 </script>
 
 <main>
 	<div id="header_div">
-		<Header links={[{title:"Form", url: "#form_link"}, {title:"About", url:"#about_link"}]} />
+		<Header
+			links={[
+				{ title: "Form", url: "#form_link" },
+				{ title: "About", url: "#about_link" },
+				{title: "How To", url: "#how_link"},
+				{title: "FAQ", url: "#faq_link"},
+			]}
+		/>
 	</div>
 	<div id="logo_div" class="section">
 		<img src="img/cpunowneon.png" alt="cpu now logo" />
@@ -17,11 +28,21 @@
 	</a>
 	<a id="about_link">
 		<div class="section">
-			<h1>About</h1>
+			<About />
 		</div>
 	</a>
-	<div class="section">
-		<h1>Why Rent</h1>
+	<a id="how_link">
+		<div class="section">
+			<HowTo />
+		</div>
+	</a>
+	<a id="faq_link">
+		<div id="faq_div" class="section">
+			<FAQ />
+		</div>
+	</a>
+	<div id="footer_div">
+		<Footer />
 	</div>
 </main>
 
@@ -54,8 +75,8 @@
 		max-height: 100%;
 	}
 	.section {
-		width: 95vw;
-		height: 85vh;
+		width: 97vw;
+		height: 78vh;
 		margin-top: 12vh;
 		margin-bottom: 2vh;
 		border-radius: 30px;
@@ -64,9 +85,19 @@
 			inset 0 0 10px #f0f, inset 0 0 15px #f0f;
 	}
 
-	h1 {
-		font-family: "neoncity";
+	#footer_div {
+		z-index: 999;
+		position: fixed;
+		bottom: 0;
+		width: 100%;
+		height: 7vh;
+		margin-top: 3vh;
 	}
+
+	#faq_div{
+		margin-bottom: 10vh;
+	}
+
 	@media (min-width: 640px) {
 		main {
 			max-width: none;
