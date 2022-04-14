@@ -6,27 +6,13 @@ export async function buildTX(accountName, accountFunds, data, cost) {
     let costString;
     let amountString;
 
-    /*let actionOne = JSON.stringify({
-        account: 'testingtest2',
-        name: 'noop',
-        authorization: [{
-          actor: 'testtestbot1',
-          permission: 'active',
-        }],
-        data: {
-        },
-      });
-  
-      let actionOneObj = JSON.parse(actionOne);
-      actionArray.push(actionOneObj);*/
-
     // Rent
     if (data.action === 'rent') {
         costString = await makeCostString(cost);
         // Check for open account
         if (accountFunds === 'no account') {
             newAction = JSON.stringify({
-                account: 'testingtest2',
+                account: 'cpunowcntrct',
                 name: 'openaccount',
                 authorization: [{
                     actor: accountName,
@@ -48,7 +34,7 @@ export async function buildTX(accountName, accountFunds, data, cost) {
                 }],
                 data: {
                     from: accountName,
-                    to: 'testingtest2',
+                    to: 'cpunowcntrct',
                     quantity: costString,
                     memo: '1',
                 },
@@ -58,6 +44,7 @@ export async function buildTX(accountName, accountFunds, data, cost) {
         }
         //Send funds if none available
         if (parseFloat(accountFunds) < cost) {
+            costString = await makeCostString(cost - parseFloat(accountFunds));
             newAction = JSON.stringify({
                 account: 'eosio.token',
                 name: 'transfer',
@@ -67,7 +54,7 @@ export async function buildTX(accountName, accountFunds, data, cost) {
                 }],
                 data: {
                     from: accountName,
-                    to: 'testingtest2',
+                    to: 'cpunowcntrct',
                     quantity: costString,
                     memo: '1',
                 },
@@ -84,7 +71,7 @@ export async function buildTX(accountName, accountFunds, data, cost) {
             recipient = data.recipient;
         };
         newAction = JSON.stringify({
-            account: 'testingtest2',
+            account: 'cpunowcntrct',
             name: 'rent',
             authorization: [{
                 actor: accountName,
@@ -106,7 +93,7 @@ export async function buildTX(accountName, accountFunds, data, cost) {
         costString = await makeCostString(cost);
         if (accountFunds === 'no account') {
             newAction = JSON.stringify({
-                account: 'testingtest2',
+                account: 'cpunowcntrct',
                 name: 'openaccount',
                 authorization: [{
                     actor: accountName,
@@ -121,6 +108,7 @@ export async function buildTX(accountName, accountFunds, data, cost) {
         }
         // Send funds if none available
         if (parseFloat(accountFunds) < cost) {
+            costString = await makeCostString(cost - parseFloat(accountFunds));
             newAction = JSON.stringify({
                 account: 'eosio.token',
                 name: 'transfer',
@@ -130,7 +118,7 @@ export async function buildTX(accountName, accountFunds, data, cost) {
                 }],
                 data: {
                     from: accountName,
-                    to: 'testingtest2',
+                    to: 'cpunowcntrct',
                     quantity: costString,
                     memo: '1',
                 },
@@ -146,7 +134,7 @@ export async function buildTX(accountName, accountFunds, data, cost) {
         };
 
         newAction = JSON.stringify({
-            account: 'testingtest2',
+            account: 'cpunowcntrct',
             name: 'addrent',
             authorization: [{
                 actor: accountName,
@@ -163,12 +151,27 @@ export async function buildTX(accountName, accountFunds, data, cost) {
         actionArray.push(actionObj);
     }
 
+    if(data.action === "open-account"){
+        newAction = JSON.stringify({
+            account: 'cpunowcntrct',
+            name: 'openaccount',
+            authorization: [{
+                actor: accountName,
+                permission: 'active',
+            }],
+            data: {
+                owner: accountName,
+            },
+        });
+        actionObj = JSON.parse(newAction);
+        actionArray.push(actionObj);
+    }
     // Add blance
-    if (data.action === "add-balance") {
+    if (data.action === "add-funds") {
         amountString = await makeCostString(parseFloat(data.amount));
         if (accountFunds === 'no account') {
             newAction = JSON.stringify({
-                account: 'testingtest2',
+                account: 'cpunowcntrct',
                 name: 'openaccount',
                 authorization: [{
                     actor: accountName,
@@ -191,7 +194,7 @@ export async function buildTX(accountName, accountFunds, data, cost) {
             }],
             data: {
                 from: accountName,
-                to: 'testingtest2',
+                to: 'cpunowcntrct',
                 quantity: amountString,
                 memo: '1',
             },
@@ -200,19 +203,18 @@ export async function buildTX(accountName, accountFunds, data, cost) {
         actionArray.push(actionObj);
     }
 
-    if (data.action === "withdraw-funds") {
+    if (data.action === "close-account") {
         amountString = await makeCostString(parseFloat(data.amount));
         if (accountFunds != 'no account') {
             newAction = JSON.stringify({
-                account: 'testingtest2',
-                name: 'pullbalance',
+                account: 'cpunowcntrct',
+                name: 'closeaccount',
                 authorization: [{
                     actor: accountName,
                     permission: 'active',
                 }],
                 data: {
                     account: accountName,
-                    amount: amountString,
                 },
             });
             actionObj = JSON.parse(newAction);
