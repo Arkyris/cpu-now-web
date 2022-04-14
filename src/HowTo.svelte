@@ -8,7 +8,7 @@
                 <div class="action_title">
                     <h2>Rent</h2>
                     <p>
-                        To rent cpu select the rent action. You can rent to
+                        To rent CPU select the rent action. You can rent to
                         yourself or another person. Leave the recipient field
                         blank for self rental (optional). Use the slider to
                         select rental time. From 12 hours to 6 days in 12 hour
@@ -34,16 +34,15 @@
                     <p>
                         When you rent an account is open on the contract in your
                         name. You can add extra funds so they are ready to go
-                        the next time you need some cpu.
+                        the next time you need some CPU.
                     </p>
                 </div>
             </div>
             <div class="action">
                 <div class="action_title">
-                    <h2>Withdraw Funds</h2>
+                    <h2>Close Account</h2>
                     <p>
-                        You can withdraw some or all funds from your account at
-                        any time.
+                        This will send back your funds and close the account. You can open a new one at any time.
                     </p>
                 </div>
             </div>
@@ -77,7 +76,7 @@
     }
 
     p {
-        font-size: 1vw;
+        font-size: 1.5vw;
         color: rgb(205, 251, 255);
         text-shadow: 0 0 1vh #fff;
         margin-top: 0;

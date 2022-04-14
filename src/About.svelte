@@ -4,9 +4,9 @@
     </div>
     <div id="about">
         <p>
-            Welcome to CPU Now! <br />The most affordable, no frills cpu rental
+            Welcome to CPU Now! <br />The most affordable, no frills CPU rental
             service. <br /> Here, the cost of rental is easily covered by actions
-            you are able to perform with the rented cpu, and you will never be taken
+            you are able to perform with the rented CPU, and you will never be taken
             advantage of for profit.
         </p>
         <h2>Our perks are simple:</h2>
@@ -36,7 +36,7 @@
     }
 
     p {
-        font-size: 25px;
+        font-size: 1.5vw;
         color: rgb(205, 251, 255);
         text-shadow: 0 0 1vh #fff;
     }

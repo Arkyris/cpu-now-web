@@ -75,6 +75,8 @@
 		max-height: 100%;
 	}
 	.section {
+		display: flex;
+		justify-content: center;
 		width: 97vw;
 		height: 78vh;
 		margin-top: 12vh;
