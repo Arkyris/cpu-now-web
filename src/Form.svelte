@@ -41,7 +41,7 @@
                     reverse: false,
                     show_payer: false,
                 });
-                if (data.rows[0].account === $acctName) {
+                if (data.rows.length > 0 && data.rows[0].account === $acctName) {
                     $accountBalance = data.rows[0].balance;
                 } else {
                     $accountBalance = "no account";
@@ -300,6 +300,27 @@
         border: 1px solid #fff;
     }
     input[type="range"]::-webkit-slider-thumb {
+        box-shadow: 0 0 10px #f0f, inset 0 0 5px #f0f;
+        border: 1px solid #fff;
+        height: 3vh;
+        width: 3vh;
+        border-radius: 3vh;
+        background: #000;
+        cursor: pointer;
+        -webkit-appearance: none;
+        margin-top: -0.6vh;
+    }
+
+    input[type=range]::-moz-range-track {
+        height: 2vh;
+        cursor: pointer;
+        box-shadow: 0 0 10px #0ff, inset 0 0 5px #0ff;
+        background: #000000;
+        border-radius: 1vh;
+        border: 1px solid #fff;
+    }
+
+    input[type=range]::-moz-range-thumb{
         box-shadow: 0 0 10px #f0f, inset 0 0 5px #f0f;
         border: 1px solid #fff;
         height: 3vh;

@@ -133,8 +133,9 @@
         width: 0.5px;
         height: 6vh;
         margin: 1vh;
-        box-shadow: 0 0 0.5vh #fff, 0 0 1vh #fff, 0 0 1vh #f0f, 0 0 2vh #f0f,
-            0 0 2vh #f0f, 0 0 2vh #f0f, 0 0 3vh #f0f;
+        background-color: rgba(255, 255, 255, 0.253);
+        box-shadow: 0 0 0.5vh .05vh #fff, 0 0 1vh .06vh #fff, 0 0 1vh .07vh #fff, 0 0 1vh .08vh #f0f, 0 0 2vh .09vh #f0f,
+            0 0 2vh .3vh #f0f, 0 0 2.5vh .4vh #f0f;
     }
 
     .info_div {
