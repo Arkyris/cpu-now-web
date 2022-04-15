@@ -1,4 +1,5 @@
 <script>
+	//import { GoogleAnalytics } from '@beyonk/svelte-google-analytics';
 	import Header from "./Header.svelte";
 	import Form from "./Form.svelte";
 	import About from "./About.svelte";
@@ -8,6 +9,9 @@
 </script>
 
 <main>
+	<!--<div>
+		<GoogleAnalytics properties={[ '311302713' ]} />
+	</div>-->
 	<div id="header_div">
 		<Header
 			links={[
