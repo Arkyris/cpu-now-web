@@ -8,15 +8,15 @@
                 <div class="action_title">
                     <h2>Why Rent</h2>
                     <p>
-                        It may seem there is only reason to rent cpu. It's
+                        It may seem there is only one reason to rent CPU. It's
                         crunch time, a drop is happening or your favorite game
                         just released a new update and you're out of spare WAX.
-                        Here at CPU Now! our goal is for rental to be a benifit
+                        Here at CPU Now! our goal is for rental to be a benefit
                         for many every day users. What if you could take your
-                        staked WAX and use it to earn more then the cost to
+                        staked WAX and use it to earn more than the cost to
                         rent. Make your WAX work for you. We may not quite be
                         there yet, but with our next major service update and
-                        ever decreasing fees we belive this concept will really
+                        ever decreasing fees we believe this concept will really
                         shine.
                     </p>
                 </div>
@@ -51,7 +51,7 @@
     }
 
     p {
-        font-size: 1vw;
+        font-size: 1.5vw;
         color: rgb(205, 251, 255);
         text-shadow: 0 0 1vh #fff;
         margin-top: 0;

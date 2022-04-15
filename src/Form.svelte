@@ -22,7 +22,7 @@
         $accountBalanceUpdateInterval = setInterval(updateAccountBalance, 1000);
         costUpdateInterval = setInterval(updateCost, 1000);
         formUpdateInterval = setInterval(updateForm, 1000);
-        //getContractCost();
+        getContractCost();
     });
 
     const updateAccountBalance = async () => {
@@ -33,15 +33,15 @@
                 );
                 const data = await rpc.get_table_rows({
                     json: true,
-                    code: "testingtest2",
-                    scope: "testingtest2",
+                    code: "cpunowcntrct",
+                    scope: "cpunowcntrct",
                     table: "balances",
                     lower_bound: $acctName,
                     limit: 1,
                     reverse: false,
                     show_payer: false,
                 });
-                if (data.rows[0].account === $acctName) {
+                if (data.rows.length > 0 && data.rows[0].account === $acctName) {
                     $accountBalance = data.rows[0].balance;
                 } else {
                     $accountBalance = "no account";
@@ -105,13 +105,20 @@
             amount_div.style.display = "none";
             actionVal = action.value;
             amountVal = amount.value;
-        } else {
+        } else if(action.value === "add-funds" || action.value === "withdraw-funds") {
             recipient_div.style.display = "none";
             days_div.style.display = "none";
             stake_div.style.display = "none";
             amount_div.style.display = "block";
             actionVal = action.value;
             amountVal = amount.value;
+        } else {
+            recipient_div.style.display = "none";
+            days_div.style.display = "none";
+            stake_div.style.display = "none";
+            amount_div.style.display = "none";
+            actionVal = action.value;
+            amountVal = 0.0;
         }
     }
 </script>
@@ -128,8 +135,9 @@
                     <select id="action" name="action">
                         <option value="rent">Rent</option>
                         <option value="add-rent">Add Rent</option>
-                        <option value="add-balance">Add Funds</option>
-                        <option value="withdraw-funds">Withdraw Funds</option>
+                        <option value="open-account">Open Account</option>
+                        <option value="add-funds">Add Funds</option>
+                        <option value="close-account">Close Account</option>
                         <!--<option value="loan">Loan</option>
                             <option value="add-loan">Add Loan</option>-->
                     </select>
@@ -216,20 +224,20 @@
     .input-div {
         z-index: 100;
         position: relative;
-        padding: 1vh;
+        /*padding: 1vh;*/
         margin-top: 3vh;
         margin-bottom: 2.5vh;
         margin-left: 13vh;
         margin-right: 13vh;
-        border-style: solid;
+        /*border-style: solid;
         border-width: .1vh;
         border-color: #fff;
-        border-radius: 2vh;
+        border-radius: 2vh;*/
         width: auto;
-        box-shadow: 0 0 5px #fff, 0 0 8px #fff, 0 0 5px #8080ff,
+        /*box-shadow: 0 0 5px #fff, 0 0 8px #fff, 0 0 5px #8080ff,
             0 0 10px #8080ff, 0 0 15px #8080ff, 0 0 20px #8080ff,
             inset 0 0 3px #fff, 0 0 6px #fff, 0 0 3px #8080ff, 0 0 6px #8080ff,
-            0 0 9px #8080ff;
+            0 0 9px #8080ff;*/
     }
     #amount_div {
         display: none;
@@ -292,6 +300,27 @@
         border: 1px solid #fff;
     }
     input[type="range"]::-webkit-slider-thumb {
+        box-shadow: 0 0 10px #f0f, inset 0 0 5px #f0f;
+        border: 1px solid #fff;
+        height: 3vh;
+        width: 3vh;
+        border-radius: 3vh;
+        background: #000;
+        cursor: pointer;
+        -webkit-appearance: none;
+        margin-top: -0.6vh;
+    }
+
+    input[type=range]::-moz-range-track {
+        height: 2vh;
+        cursor: pointer;
+        box-shadow: 0 0 10px #0ff, inset 0 0 5px #0ff;
+        background: #000000;
+        border-radius: 1vh;
+        border: 1px solid #fff;
+    }
+
+    input[type=range]::-moz-range-thumb{
         box-shadow: 0 0 10px #f0f, inset 0 0 5px #f0f;
         border: 1px solid #fff;
         height: 3vh;
