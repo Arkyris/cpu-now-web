@@ -1,6 +1,6 @@
 <script>
-    import { Anchor } from "ual-anchor";
-    import { Wax } from "@eosdacio/ual-wax";
+    import { Anchor } from "@arkyris/ual-anchor";
+    import { Wax } from "@arkyris/ual-wax";
     import { UALJs } from "ual-plainjs-renderer";
     import { loggedInUser, setUser, acctName } from "./stores/current_user";
     import { onMount } from "svelte";
