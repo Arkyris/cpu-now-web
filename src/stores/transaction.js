@@ -245,6 +245,5 @@ export function makeCostString(cost) {
     costString = fixedCost.toString();
     costString += ' WAX';
 
-    console.log(costString);
     return costString;
 }

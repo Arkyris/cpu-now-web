@@ -6,6 +6,7 @@
         acctName,
         walletBalance,
         walletBalanceUpdateInterval,
+        loggedIn,
     } from "./stores/current_user";
     import {
         totalFunds,
@@ -18,14 +19,16 @@
     export let links = [];
 
     onMount(() => {
+        updateAvailableFunds();
+        updateTotalFunds();
         $walletBalanceUpdateInterval = setInterval(updateWalletBalance, 1000);
-        $totalFundsUpdateInterval = setInterval(updateTotalFunds, 1000);
-        $availableFundsUpdateInterval = setInterval(updateAvailableFunds, 1000);
+        $totalFundsUpdateInterval = setInterval(updateTotalFunds, 30000);
+        $availableFundsUpdateInterval = setInterval(updateAvailableFunds, 30000);
     });
 
     const updateWalletBalance = async () => {
         try {
-            if ($acctName != "") {
+            if ($acctName != "" && $loggedIn === false) {
                 const rpc = new JsonRpc(
                     `${myChain.rpcEndpoints[0].protocol}://${myChain.rpcEndpoints[0].host}:${myChain.rpcEndpoints[0].port}`
                 );
@@ -34,8 +37,10 @@
 
                 //const { core_liquid_balance: $balance } = data;
                 $walletBalance = data.core_liquid_balance;
-            } else {
+                $loggedIn = true;
+            } else if ($acctName === "" && $loggedIn === true) {
                 $walletBalance = "";
+                $loggedIn = false;
             }
         } catch (e) {
             console.error(e);
@@ -133,8 +138,9 @@
         width: 0.5px;
         height: 6vh;
         margin: 1vh;
-        box-shadow: 0 0 0.5vh #fff, 0 0 1vh #fff, 0 0 1vh #f0f, 0 0 2vh #f0f,
-            0 0 2vh #f0f, 0 0 2vh #f0f, 0 0 3vh #f0f;
+        background-color: rgba(255, 255, 255, 0.253);
+        box-shadow: 0 0 0.5vh .05vh #fff, 0 0 1vh .06vh #fff, 0 0 1vh .07vh #fff, 0 0 1vh .08vh #f0f, 0 0 2vh .09vh #f0f,
+            0 0 2vh .3vh #f0f, 0 0 2.5vh .4vh #f0f;
     }
 
     .info_div {

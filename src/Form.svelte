@@ -5,10 +5,15 @@
         accountBalance,
         accountBalanceUpdateInterval,
         loggedInUser,
+        loggedIn,
     } from "./stores/current_user";
+    import {
+        totalFunds,
+        availableFunds,
+        contractCost,
+    } from "./stores/contractInfo";
     import { myChain } from "./stores/chainInfo";
     import { JsonRpc } from "eosjs";
-    import { contractCost } from "./stores/contractInfo";
     import { buildTX } from "./stores/transaction";
 
     let daysValue = 3;
@@ -19,15 +24,16 @@
     let amountVal;
 
     onMount(() => {
+        updateAccountBalance();
         $accountBalanceUpdateInterval = setInterval(updateAccountBalance, 1000);
-        costUpdateInterval = setInterval(updateCost, 1000);
-        formUpdateInterval = setInterval(updateForm, 1000);
+        costUpdateInterval = setInterval(updateCost, 250);
+        formUpdateInterval = setInterval(updateForm, 250);
         getContractCost();
     });
 
     const updateAccountBalance = async () => {
         try {
-            if ($acctName != "") {
+            if ($acctName != "" && $loggedIn === false) {
                 const rpc = new JsonRpc(
                     `${myChain.rpcEndpoints[0].protocol}://${myChain.rpcEndpoints[0].host}:${myChain.rpcEndpoints[0].port}`
                 );
@@ -41,9 +47,9 @@
                     reverse: false,
                     show_payer: false,
                 });
-                if (data.rows[0].account === $acctName) {
+                if (data.rows.length > 0 && data.rows[0].account === $acctName) {
                     $accountBalance = data.rows[0].balance;
-                } else {
+                } else if ($acctName === "" && $loggedIn === true) {
                     $accountBalance = "no account";
                 }
             }
@@ -51,6 +57,48 @@
             console.error(e);
         }
     };
+
+    async function updateTotalFunds() {
+        try {
+            const rpc = new JsonRpc(
+                `${myChain.rpcEndpoints[0].protocol}://${myChain.rpcEndpoints[0].host}:${myChain.rpcEndpoints[0].port}`
+            );
+            const data = await rpc.get_table_rows({
+                json: true,
+                code: "cpunowcntrct",
+                scope: "cpunowcntrct",
+                table: "contstate",
+                limit: 1,
+                reverse: false,
+                show_payer: false,
+            });
+            $totalFunds = data.rows[0].total_funds;
+        } catch (e) {
+            console.error(e);
+        }
+    }
+    async function updateAvailableFunds() {
+        try {
+            const rpc = new JsonRpc(
+                `${myChain.rpcEndpoints[0].protocol}://${myChain.rpcEndpoints[0].host}:${myChain.rpcEndpoints[0].port}`
+            );
+            const data = await rpc.get_table_rows({
+                json: true,
+                code: "cpunowcntrct",
+                scope: "cpunowcntrct",
+                table: "contstate",
+                limit: 1,
+                reverse: false,
+                show_payer: false,
+            });
+            $availableFunds =
+                parseFloat(data.rows[0].available_funds) -
+                parseFloat(data.rows[0].refunding);
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
     async function onSubmit(e) {
         const formData = new FormData(e.target);
 
@@ -66,12 +114,14 @@
             data,
             cost
         );
-
+        
         loggedInUser.signTransaction(builtActions, {
             blocksBehind: 3,
             expireSeconds: 30,
             broadcast: true,
         });
+        setTimeout(() => {updateTotalFunds()}, 3000);
+        setTimeout(() => {updateAvailableFunds()}, 3000);
     }
 
     async function getContractCost() {
@@ -300,6 +350,27 @@
         border: 1px solid #fff;
     }
     input[type="range"]::-webkit-slider-thumb {
+        box-shadow: 0 0 10px #f0f, inset 0 0 5px #f0f;
+        border: 1px solid #fff;
+        height: 3vh;
+        width: 3vh;
+        border-radius: 3vh;
+        background: #000;
+        cursor: pointer;
+        -webkit-appearance: none;
+        margin-top: -0.6vh;
+    }
+
+    input[type=range]::-moz-range-track {
+        height: 2vh;
+        cursor: pointer;
+        box-shadow: 0 0 10px #0ff, inset 0 0 5px #0ff;
+        background: #000000;
+        border-radius: 1vh;
+        border: 1px solid #fff;
+    }
+
+    input[type=range]::-moz-range-thumb{
         box-shadow: 0 0 10px #f0f, inset 0 0 5px #f0f;
         border: 1px solid #fff;
         height: 3vh;
