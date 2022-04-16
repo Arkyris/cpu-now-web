@@ -20,8 +20,8 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
-    "@arkyris/ual-anchor": "^0.0.3",
-    "@arkyris/ual-wax": "^0.0.1",
+    "@arkyris/ual-anchor": "^0.0.4",
+    "@arkyris/ual-wax": "^0.0.4",
     "@eosdacio/ual-wax": "^1.5.1",
     "@rollup/plugin-replace": "^4.0.0",
     "eosjs": "^22.1.0",

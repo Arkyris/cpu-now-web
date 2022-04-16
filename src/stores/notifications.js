@@ -23,9 +23,10 @@ export function notifyError(e) {
 }
 
 export function notifySuccess(message, status) {
+    let nStatus = capitalizeFirstLetter(status);
     const d = document.createElement('div');
     d.addEventListener('click', function handleClick(event) {window.open(`https://wax.bloks.io/transaction/${message}`); });
-    d.innerHTML =  `Success! <br /> ${status} <br /> TX ID: ${message}`;
+    d.innerHTML =  `${nStatus}!<br />TX ID: ${message}`;
     d.style.position = "fixed";
     d.style.top = "15vh";
     d.style.right = "2vw"
@@ -48,3 +49,6 @@ export function notifySuccess(message, status) {
     }, 15000);
 }
 
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
