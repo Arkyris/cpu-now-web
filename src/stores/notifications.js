@@ -22,7 +22,6 @@ export function notifyError(e) {
     }, 15000);
 }
 
-
 export function notifySuccess(message, status) {
     const d = document.createElement('div');
     d.addEventListener('click', function handleClick(event) {window.open(`https://wax.bloks.io/transaction/${message}`); });
