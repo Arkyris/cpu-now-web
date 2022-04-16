@@ -8,7 +8,8 @@ export const myChain = {
         {
             protocol: "https",
             host: //"testnet.waxsweden.org", 
-            "wax.greymass.com",
+            //"wax.greymass.com",
+            "api.waxsweden.org",
             port: "443",
         },
     ],
