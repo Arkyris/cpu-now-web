@@ -53,8 +53,8 @@
             );
             const data = await rpc.get_table_rows({
                 json: true,
-                code: "cpunowcntrct",
-                scope: "cpunowcntrct",
+                code: "testingtest2",
+                scope: "testingtest2",
                 table: "contstate",
                 limit: 1,
                 reverse: false,
@@ -72,8 +72,8 @@
             );
             const data = await rpc.get_table_rows({
                 json: true,
-                code: "cpunowcntrct",
-                scope: "cpunowcntrct",
+                code: "testingtest2",
+                scope: "testingtest2",
                 table: "contstate",
                 limit: 1,
                 reverse: false,
@@ -109,7 +109,7 @@
         position: relative;
         background-color: #000000;
         display: flex;
-        z-index: 999;
+        z-index: 50;
         width: 100%;
         height: 100%;
         border-radius: 0 0 20px 20px;

@@ -39,8 +39,8 @@
                 );
                 const data = await rpc.get_table_rows({
                     json: true,
-                    code: "cpunowcntrct",
-                    scope: "cpunowcntrct",
+                    code: "testingtest2",
+                    scope: "testingtest2",
                     table: "balances",
                     lower_bound: $acctName,
                     limit: 1,
@@ -65,8 +65,8 @@
             );
             const data = await rpc.get_table_rows({
                 json: true,
-                code: "cpunowcntrct",
-                scope: "cpunowcntrct",
+                code: "testingtest2",
+                scope: "testingtest2",
                 table: "contstate",
                 limit: 1,
                 reverse: false,
@@ -84,8 +84,8 @@
             );
             const data = await rpc.get_table_rows({
                 json: true,
-                code: "cpunowcntrct",
-                scope: "cpunowcntrct",
+                code: "testingtest2",
+                scope: "testingtest2",
                 table: "contstate",
                 limit: 1,
                 reverse: false,
@@ -114,7 +114,6 @@
             data,
             cost
         );
-        
         loggedInUser.signTransaction(builtActions, {
             blocksBehind: 3,
             expireSeconds: 30,
@@ -131,8 +130,8 @@
             );
             const data = await rpc.get_table_rows({
                 json: true,
-                code: "cpunowcntrct",
-                scope: "cpunowcntrct",
+                code: "testingtest2",
+                scope: "testingtest2",
                 table: "contstate",
                 limit: 1,
                 reverse: false,
@@ -188,6 +187,7 @@
                         <option value="open-account">Open Account</option>
                         <option value="add-funds">Add Funds</option>
                         <option value="close-account">Close Account</option>
+                        <option value="test">Test</option>
                         <!--<option value="loan">Loan</option>
                             <option value="add-loan">Add Loan</option>-->
                     </select>

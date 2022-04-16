@@ -20,10 +20,13 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
+    "@arkyris/ual-anchor": "^0.0.3",
+    "@arkyris/ual-wax": "^0.0.1",
     "@eosdacio/ual-wax": "^1.5.1",
     "@rollup/plugin-replace": "^4.0.0",
     "eosjs": "^22.1.0",
     "sirv-cli": "^2.0.0",
+    "toastify-js": "^1.11.2",
     "ual-anchor": "^1.1.5",
     "ual-plainjs-renderer": "^0.3.0",
     "universal-authenticator-library": "^0.3.0"
