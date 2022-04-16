@@ -7,6 +7,7 @@ export function setUser(newUser) {
     loggedInUser = newUser;
 }
 
+export const loggedIn = writable(false);
 export const acctName = writable("");
 export const walletBalance = writable("");
 export const walletBalanceUpdateInterval = writable();
