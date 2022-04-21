@@ -6,6 +6,7 @@
         acctName,
         walletBalance,
         walletBalanceUpdateInterval,
+        loggedIn,
     } from "./stores/current_user";
     import {
         totalFunds,
@@ -18,14 +19,16 @@
     export let links = [];
 
     onMount(() => {
+        updateAvailableFunds();
+        updateTotalFunds();
         $walletBalanceUpdateInterval = setInterval(updateWalletBalance, 1000);
-        $totalFundsUpdateInterval = setInterval(updateTotalFunds, 1000);
-        $availableFundsUpdateInterval = setInterval(updateAvailableFunds, 1000);
+        $totalFundsUpdateInterval = setInterval(updateTotalFunds, 30000);
+        $availableFundsUpdateInterval = setInterval(updateAvailableFunds, 30000);
     });
 
     const updateWalletBalance = async () => {
         try {
-            if ($acctName != "") {
+            if ($acctName != "" && $loggedIn === false) {
                 const rpc = new JsonRpc(
                     `${myChain.rpcEndpoints[0].protocol}://${myChain.rpcEndpoints[0].host}:${myChain.rpcEndpoints[0].port}`
                 );
@@ -34,8 +37,10 @@
 
                 //const { core_liquid_balance: $balance } = data;
                 $walletBalance = data.core_liquid_balance;
-            } else {
+                $loggedIn = true;
+            } else if ($acctName === "" && $loggedIn === true) {
                 $walletBalance = "";
+                $loggedIn = false;
             }
         } catch (e) {
             console.error(e);
