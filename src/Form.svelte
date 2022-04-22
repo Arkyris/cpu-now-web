@@ -6,6 +6,7 @@
         accountBalanceUpdateInterval,
         loggedInUser,
         loggedIn,
+        rents,
     } from "./stores/current_user";
     import {
         totalFunds,
@@ -15,20 +16,26 @@
     import { myChain } from "./stores/chainInfo";
     import { JsonRpc } from "eosjs";
     import { buildTX } from "./stores/transaction";
+    import { getRentStats, rent } from "./stores/current_user";
 
     let daysValue = 3;
     let cost;
     let costUpdateInterval;
     let formUpdateInterval;
+    let rentUpdateInterval;
     let actionVal;
     let amountVal;
+    let statsModule;
+    let thisRents = [];
 
     onMount(() => {
         updateAccountBalance();
         $accountBalanceUpdateInterval = setInterval(updateAccountBalance, 1000);
         costUpdateInterval = setInterval(updateCost, 250);
         formUpdateInterval = setInterval(updateForm, 250);
+        rentUpdateInterval = setInterval(updateRent, 250);
         getContractCost();
+        statsModule = document.getElementById("stats_div");
     });
 
     const updateAccountBalance = async () => {
@@ -47,7 +54,10 @@
                     reverse: false,
                     show_payer: false,
                 });
-                if (data.rows.length > 0 && data.rows[0].account === $acctName) {
+                if (
+                    data.rows.length > 0 &&
+                    data.rows[0].account === $acctName
+                ) {
                     $accountBalance = data.rows[0].balance;
                 } else if ($acctName === "" && $loggedIn === true) {
                     $accountBalance = "no account";
@@ -114,14 +124,18 @@
             data,
             cost
         );
-        
+
         loggedInUser.signTransaction(builtActions, {
             blocksBehind: 3,
             expireSeconds: 30,
             broadcast: true,
         });
-        setTimeout(() => {updateTotalFunds()}, 3000);
-        setTimeout(() => {updateAvailableFunds()}, 3000);
+        setTimeout(() => {
+            updateTotalFunds();
+        }, 3000);
+        setTimeout(() => {
+            updateAvailableFunds();
+        }, 3000);
     }
 
     async function getContractCost() {
@@ -149,21 +163,24 @@
     }
     function updateForm() {
         if (action.value === "rent" || action.value === "add-rent") {
-            recipient_div.style.display = "block";
+            document.getElementById("recipient_div").style.display = "block";
             days_div.style.display = "block";
             stake_div.style.display = "block";
             amount_div.style.display = "none";
             actionVal = action.value;
             amountVal = amount.value;
-        } else if(action.value === "add-funds" || action.value === "withdraw-funds") {
-            recipient_div.style.display = "none";
+        } else if (
+            action.value === "add-funds" ||
+            action.value === "withdraw-funds"
+        ) {
+            document.getElementById("recipient_div").style.display = "none";
             days_div.style.display = "none";
             stake_div.style.display = "none";
             amount_div.style.display = "block";
             actionVal = action.value;
             amountVal = amount.value;
         } else {
-            recipient_div.style.display = "none";
+            document.getElementById("recipient_div").style.display = "none";
             days_div.style.display = "none";
             stake_div.style.display = "none";
             amount_div.style.display = "none";
@@ -171,13 +188,18 @@
             amountVal = 0.0;
         }
     }
+    async function openStats() {
+        thisRents = [];
+        $rent = await getRentStats($acctName);
+        statsModule.style.display = "block";
+    }
+    function updateRent() {
+        $rents = $rent;
+    }
 </script>
 
 <div class="form-main-div">
     <div class="form-bg">
-        <!--<div class="user-info">
-                <p>Account Funds: {$accountBalance}</p>
-            </div>-->
         <div class="form-div">
             <form on:submit|preventDefault={onSubmit}>
                 <div class="input-div">
@@ -229,12 +251,17 @@
                     <label for="amount">Amount</label>
                     <input type="float" id="amount" name="amount" value="0.0" />
                 </div>
-                <button id="submit_button" type="submit"
-                    >{actionVal === "rent" || actionVal === "add-rent"
-                        ? `${cost.toFixed(8)} WAX`
-                        : `${amountVal} WAX`}</button
-                >
+                <div class="button_div">
+                    <button id="submit_button" type="submit"
+                        >{actionVal === "rent" || actionVal === "add-rent"
+                            ? `${cost.toFixed(8)} WAX`
+                            : `${amountVal} WAX`}</button
+                    >
+                </div>
             </form>
+        </div>
+        <div class="button_div">
+            <button id="get_stats" on:click={openStats}>Account Stats</button>
         </div>
     </div>
 </div>
@@ -263,22 +290,25 @@
         position: relative;
         display: flex;
         justify-content: center;
-        width: auto;
-        height: auto;
+        width: 100%;
+        height: 100%;
     }
-    /*.user-info {
-        position: absolute;
-        color: aquamarine;
-        width: 50%;
-    }*/
+
+    form {
+        display: flex;
+        flex-direction: column;
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+        padding-left: 2vw;
+        padding-right: 2vw;
+    }
+
     .input-div {
-        z-index: 100;
+        z-index: 50;
         position: relative;
+        margin-bottom: 4vh;
         /*padding: 1vh;*/
-        margin-top: 3vh;
-        margin-bottom: 2.5vh;
-        margin-left: 13vh;
-        margin-right: 13vh;
         /*border-style: solid;
         border-width: .1vh;
         border-color: #fff;
@@ -293,7 +323,16 @@
         display: none;
     }
 
-    #submit_button {
+    .button_div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        margin-top: 2.5vh;
+        width: auto;
+    }
+
+    button {
         margin-bottom: 2vh;
         padding: 1vh;
         background-color: #000;
@@ -305,22 +344,25 @@
         border-style: solid;
         border-width: 1px;
     }
-    #submit_button:hover {
+    button:hover {
         border-color: #fff;
         box-shadow: 0 0 3px #fff, 0 0 6px #fff, 0 0 5px #f0f, 0 0 10px #f0f,
             0 0 15px #f0f, inset 0 0 2px #fff, inset 0 0 4px #fff,
             inset 0 0 3px #f0f, inset 0 0 6px #f0f;
     }
     label {
+        z-index: 50;
         font-family: "neoncity";
-        font-size: 6vh;
+        font-size: 5vh;
         font-weight: 50;
         letter-spacing: 4px;
+        margin-bottom: -0.2vh;
         color: white;
         text-shadow: 0 0 5px #fff, 0 0 2px #fff, 0 0 1px #fff, 0 0 20px #f0f,
             0 0 15px #f0f, 0 0 10px #f0f, 0 0 5px #f0f;
     }
     input {
+        z-index: 50;
         background-color: #000;
         color: #fff;
         text-align: center;
@@ -361,7 +403,7 @@
         margin-top: -0.6vh;
     }
 
-    input[type=range]::-moz-range-track {
+    input[type="range"]::-moz-range-track {
         height: 2vh;
         cursor: pointer;
         box-shadow: 0 0 10px #0ff, inset 0 0 5px #0ff;
@@ -370,7 +412,7 @@
         border: 1px solid #fff;
     }
 
-    input[type=range]::-moz-range-thumb{
+    input[type="range"]::-moz-range-thumb {
         box-shadow: 0 0 10px #f0f, inset 0 0 5px #f0f;
         border: 1px solid #fff;
         height: 3vh;
@@ -420,7 +462,7 @@
         text-shadow: 0 0 1vh #fff;
         background-color: #000;
     }
-    input[type="text"]::placeholder{
+    input[type="text"]::placeholder {
         color: rgba(185, 185, 185, 0.462);
         text-shadow: 0 0 0 #000;
     }

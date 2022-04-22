@@ -6,6 +6,34 @@
 	import HowTo from "./HowTo.svelte";
 	import FAQ from "./FAQ.svelte";
 	import Footer from "./Footer.svelte";
+	import Stats from "./Stats.svelte";
+	import { rent, otherRent } from "./stores/current_user";
+
+	function clickOutside(node) {
+		const handleClick = (event) => {
+			if (
+				node &&
+				!node.contains(event.target) &&
+				!event.defaultPrevented
+			) {
+				node.dispatchEvent(new CustomEvent("click_outside", node));
+			}
+		};
+
+		document.addEventListener("click", handleClick, true);
+
+		return {
+			destroy() {
+				document.removeEventListener("click", handleClick, true);
+			},
+		};
+	}
+
+	function handleClickOutside(event) {
+		document.getElementById("stats_div").style.display = "none";
+		$rent = [];
+		$otherRent = [];
+	}
 </script>
 
 <main>
@@ -17,8 +45,8 @@
 			links={[
 				{ title: "Form", url: "#form_link" },
 				{ title: "About", url: "#about_link" },
-				{title: "How To", url: "#how_link"},
-				{title: "FAQ", url: "#faq_link"},
+				{ title: "How To", url: "#how_link" },
+				{ title: "FAQ", url: "#faq_link" },
 			]}
 		/>
 	</div>
@@ -45,6 +73,9 @@
 			<FAQ />
 		</div>
 	</a>
+	<div id="stats_div" use:clickOutside on:click_outside={handleClickOutside}>
+		<Stats />
+	</div>
 	<div id="footer_div">
 		<Footer />
 	</div>
@@ -91,6 +122,11 @@
 			inset 0 0 10px #f0f, inset 0 0 15px #f0f;
 	}
 
+	#stats_div {
+		position: fixed;
+		display: none;
+	}
+
 	#footer_div {
 		z-index: 999;
 		position: fixed;
@@ -100,7 +136,7 @@
 		margin-top: 3vh;
 	}
 
-	#faq_div{
+	#faq_div {
 		margin-bottom: 10vh;
 	}
 
