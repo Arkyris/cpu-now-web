@@ -456,7 +456,6 @@
             0 0 4vh #0ff;
     }
     input[type="text"] {
-        width: 40%;
         font-size: 2vh;
         color: rgb(205, 251, 255);
         text-shadow: 0 0 1vh #fff;
