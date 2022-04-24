@@ -196,7 +196,7 @@
         position: relative;
         color: #fff;
         font-family: "neoncity";
-        font-size: 2.5vw;
+        font-size: 3.5vh;
         padding: 0.75vw;
         height: 3vh;
         line-height: 3.5vh;

@@ -280,6 +280,7 @@
         width: auto;
         height: auto;
         border-radius: 3vh;
+        padding: 4.5vh;
         box-shadow: 0 0 1px #fff, 0 0px 3px #fff, 0 0px 5px #fff,
             0 0px 10px #0ff, 0px 0px 15px #0ff, 0 0px 20px #0ff, 0 0px 25px #0ff,
             inset 0 0px 3px #fff, inset 0 0px 5px #fff, inset 0 0px 8px #fff,
@@ -353,7 +354,7 @@
     label {
         z-index: 50;
         font-family: "neoncity";
-        font-size: 5vh;
+        font-size: 3vh;
         font-weight: 50;
         letter-spacing: 4px;
         margin-bottom: -0.2vh;

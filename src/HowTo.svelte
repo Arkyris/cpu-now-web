@@ -76,7 +76,7 @@
     }
 
     p {
-        font-size: 1.5vw;
+        font-size: 2.2vh;
         color: rgb(205, 251, 255);
         text-shadow: 0 0 1vh #fff;
         margin-top: 0;
