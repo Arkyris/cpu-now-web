@@ -15,32 +15,32 @@
 	<div id="header_div">
 		<Header
 			links={[
-				{ title: "Form", url: "#form_link" },
-				{ title: "About", url: "#about_link" },
-				{title: "How To", url: "#how_link"},
-				{title: "FAQ", url: "#faq_link"},
+				{ title: "Form", url: "#form" },
+				{ title: "About", url: "#about" },
+				{title: "How To", url: "#how"},
+				{title: "FAQ", url: "#faq"},
 			]}
 		/>
 	</div>
 	<div id="logo_div" class="section">
 		<img src="img/cpunowneon.png" alt="cpu now logo" />
 	</div>
-	<a id="form_link">
+	<a id="form">
 		<div class="section">
 			<Form />
 		</div>
 	</a>
-	<a id="about_link">
+	<a id="about">
 		<div class="section">
 			<About />
 		</div>
 	</a>
-	<a id="how_link">
+	<a id="how">
 		<div class="section">
 			<HowTo />
 		</div>
 	</a>
-	<a id="faq_link">
+	<a id="faq">
 		<div id="faq_div" class="section">
 			<FAQ />
 		</div>
