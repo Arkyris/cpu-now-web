@@ -31,8 +31,8 @@
 
         // Attach media query listener on mount hook
         const mediaListener = window.matchMedia("(max-width: 767px)");
-        mediaListener.addEventListener("change", () => {
-            this.checkNative();
+        mediaListener.addEventListener("change", function(event){
+            mediaQueryHandler(event);
         });
     });
 
@@ -100,6 +100,12 @@
     // Mobile menu click event handler
     const handleMobileIconClick = () => (showMobileMenu = !showMobileMenu);
 
+    function closeMobileMenu() {
+        if(showMobileMenu){
+            showMobileMenu = !showMobileMenu
+        };
+    }
+
     // Media match query handler
     const mediaQueryHandler = (e) => {
         // Reset mobile state
@@ -120,7 +126,7 @@
             </div>
             <ul class={`navbar-list${showMobileMenu ? " mobile" : ""}`}>
                 {#each links as link}
-                    <a href={link.url}  on:click={handleMobileIconClick}>{link.title}</a>
+                    <a href={link.url}  on:click={closeMobileMenu}>{link.title}</a>
                 {/each}
             </ul>
         </div>
