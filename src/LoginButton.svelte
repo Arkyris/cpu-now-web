@@ -6,19 +6,16 @@
     import { onMount } from "svelte";
     import { User } from "universal-authenticator-library";
     import { myChain } from "./stores/chainInfo";
-    import { pHI, pVI, loginAnimation } from "./stores/animations";
 
     let myAppRoot;
     let ual;
     let toggleButtonInterval;
-    let loginAnimationInterval;
     let ual_button;
 
     onMount(() => {
         mounted();
         addLogoutButtonListener();
         toggleButtonInterval = setInterval(toggleButton, 1000);
-        //loginAnimationInterval = setInterval(loginAnimation, 100);
     });
 
     async function mounted() {
@@ -56,8 +53,8 @@
         ual_button.style.backgroundColor = "#000";
         ual_button.style.color = "#fff";
         ual_button.style.borderRadius = "2.5vh";
-        ual_button.style.width = "8vw";
-        ual_button.style.height = "5vh";
+        ual_button.style.width = "100%";
+        ual_button.style.height = "100%";
         ual_button.style.animationName = "inherit";
         ual_button.style.animationDuration = "4s";
         ual_button.style.animationIterationCount = "infinite";
@@ -123,6 +120,8 @@
     #login {
         border-radius: 2.5vh;
         animation-name: loginAnimation;
+        width: 8vw;
+        height: 5vh;
     }
 
     @keyframes loginAnimation {
