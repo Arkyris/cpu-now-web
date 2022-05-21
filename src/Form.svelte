@@ -2,11 +2,10 @@
     import { onMount } from "svelte";
     import {
         acctName,
-        accountBalance,
-        accountBalanceUpdateInterval,
         loggedInUser,
         loggedIn,
         rents,
+        loan,
     } from "./stores/current_user";
     import {
         totalFunds,
@@ -29,8 +28,8 @@
     let thisRents = [];
 
     onMount(() => {
-        updateAccountBalance();
-        $accountBalanceUpdateInterval = setInterval(updateAccountBalance, 1000);
+        //updateAccountBalance();
+        //$accountBalanceUpdateInterval = setInterval(updateAccountBalance, 1000);
         costUpdateInterval = setInterval(updateCost, 250);
         formUpdateInterval = setInterval(updateForm, 250);
         rentUpdateInterval = setInterval(updateRent, 250);
@@ -38,7 +37,7 @@
         statsModule = document.getElementById("stats_div");
     });
 
-    const updateAccountBalance = async () => {
+    /*const updateAccountBalance = async () => {
         try {
             if ($acctName != "" && $loggedIn === false) {
                 const rpc = new JsonRpc(
@@ -66,7 +65,7 @@
         } catch (e) {
             console.error(e);
         }
-    };
+    };*/
 
     async function updateTotalFunds() {
         try {
@@ -120,9 +119,9 @@
         //console.log(data);
         let builtActions = await buildTX(
             $acctName,
-            $accountBalance,
             data,
-            cost
+            cost,
+            $loan
         );
 
         loggedInUser.signTransaction(builtActions, {
@@ -170,8 +169,8 @@
             actionVal = action.value;
             amountVal = amount.value;
         } else if (
-            action.value === "add-funds" ||
-            action.value === "withdraw-funds"
+            action.value === "add-loan" ||
+            action.value === "remove-loan"
         ) {
             document.getElementById("recipient_div").style.display = "none";
             days_div.style.display = "none";
@@ -207,11 +206,9 @@
                     <select id="action" name="action">
                         <option value="rent">Rent</option>
                         <option value="add-rent">Add Rent</option>
-                        <option value="open-account">Open Account</option>
-                        <option value="add-funds">Add Funds</option>
-                        <option value="close-account">Close Account</option>
-                        <!--<option value="loan">Loan</option>
-                            <option value="add-loan">Add Loan</option>-->
+                        <option value="add-loan">Loan</option>
+                        <option value="remove-loan">Remove Loan</option>
+                        <option value="claim-refund">Claim Refund</option>
                     </select>
                 </div>
                 <div id="recipient_div" class="input-div">

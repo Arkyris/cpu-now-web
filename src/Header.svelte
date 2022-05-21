@@ -31,7 +31,7 @@
 
         // Attach media query listener on mount hook
         const mediaListener = window.matchMedia("(max-width: 767px)");
-        mediaListener.addEventListener("change", function(event){
+        mediaListener.addEventListener("change", function (event) {
             mediaQueryHandler(event);
         });
     });
@@ -89,9 +89,19 @@
                 reverse: false,
                 show_payer: false,
             });
-            $availableFunds =
-                parseFloat(data.rows[0].available_funds) -
-                parseFloat(data.rows[0].refunding);
+            if (
+                (
+                    parseFloat(data.rows[0].available_funds) -
+                    parseFloat(data.rows[0].refunding)
+                ).toFixed(8) > 0
+            ) {
+                $availableFunds = (
+                    parseFloat(data.rows[0].available_funds) -
+                    parseFloat(data.rows[0].refunding)
+                ).toFixed(8);
+            } else {
+                $availableFunds = "0.00000000";
+            }
         } catch (e) {
             console.error(e);
         }
@@ -101,9 +111,9 @@
     const handleMobileIconClick = () => (showMobileMenu = !showMobileMenu);
 
     function closeMobileMenu() {
-        if(showMobileMenu){
-            showMobileMenu = !showMobileMenu
-        };
+        if (showMobileMenu) {
+            showMobileMenu = !showMobileMenu;
+        }
     }
 
     // Media match query handler
@@ -126,7 +136,9 @@
             </div>
             <ul class={`navbar-list${showMobileMenu ? " mobile" : ""}`}>
                 {#each links as link}
-                    <a href={link.url}  on:click={closeMobileMenu}>{link.title}</a>
+                    <a href={link.url} on:click={closeMobileMenu}
+                        >{link.title}</a
+                    >
                 {/each}
             </ul>
         </div>
@@ -136,7 +148,7 @@
         <div class="div" />
         <p>Total Funds:<br />{$totalFunds}</p>
         <div class="div" />
-        <p>Available Funds:<br />{$availableFunds}.00000000 WAX</p>
+        <p>Available Funds:<br />{$availableFunds} WAX</p>
     </div>
     <div class="inner_header_div">
         <LoginButton />
@@ -208,9 +220,9 @@
         margin: 1vh;
         text-shadow: 0 0 0.5vh #fff, 0 0 1vh #fff, 0 0 1vh #f0f, 0 0 2vh #f0f,
             0 0 4vh #f0f, 0 0 5vh #f0f;
-        box-shadow: 0 0 0.25vh #fff, 0 0 .5vh #fff, 0 0 .5vh #0ff,
+        box-shadow: 0 0 0.25vh #fff, 0 0 0.5vh #fff, 0 0 0.5vh #0ff,
             0 0 1vh #0ff, 0 0 1.5vh #0ff, inset 0 0 0.25vh #fff,
-            inset 0 0 .5vh #0ff, inset 0 0 1vh #0ff;
+            inset 0 0 0.5vh #0ff, inset 0 0 1vh #0ff;
     }
 
     .inner {
@@ -305,7 +317,9 @@
         width: auto;
         height: auto;
         border-radius: 3vw;
-        box-shadow: 0 0 0.5vh #fff, 0 0 1vh #fff, 0 0 1vh #8080ff, 0 0 1.5vh #8080ff, inset 0 0 .25vh #fff, inset 0 0 .5vh #fff, inset 0 0 .5vh #8080ff, inset 0 0 .75vh #8080ff;
+        box-shadow: 0 0 0.5vh #fff, 0 0 1vh #fff, 0 0 1vh #8080ff,
+            0 0 1.5vh #8080ff, inset 0 0 0.25vh #fff, inset 0 0 0.5vh #fff,
+            inset 0 0 0.5vh #8080ff, inset 0 0 0.75vh #8080ff;
     }
 
     @media only screen and (min-width: 767px) {
@@ -323,15 +337,15 @@
             left: 1.5vh;
             margin-right: 1.5vw;
             box-shadow: 0 0 0.5vh #fff, 0 0 1vh #fff, 0 0 1vh #8080ff,
-            0 0 2vh #8080ff, 0 0 3vh #8080ff, inset 0 0 0.5vh #fff,
-            inset 0 0 1vh #8080ff, inset 0 0 2vh #8080ff;
+                0 0 2vh #8080ff, 0 0 3vh #8080ff, inset 0 0 0.5vh #fff,
+                inset 0 0 1vh #8080ff, inset 0 0 2vh #8080ff;
         }
 
         .info_div {
-        display: flex;
-        position: relative;
-        width: 50vw;
-        justify-content: center;
-    }
+            display: flex;
+            position: relative;
+            width: 50vw;
+            justify-content: center;
+        }
     }
 </style>

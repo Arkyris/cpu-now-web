@@ -1,6 +1,6 @@
 <script>
     import { onMount } from "svelte";
-    import { rents, otherRents, accountBalance, getRentStats, otherRent, rent } from "./stores/current_user";
+    import { rents, otherRents, getRentStats, otherRent, rent, loan, loanAmount, loanNewAmount, loanRefund } from "./stores/current_user";
 
     let statsModule;
     let thisRents;
@@ -40,6 +40,9 @@
     <button id="close_module" on:click={closeStats}>X</button>
     <div id="logged_in_div" bind:this={$rents}>
         <h1>Your Account</h1>
+        {#if $loan === true}
+            <p>Loan: {$loanAmount}<br>New Loan: {$loanNewAmount}<br>Loan Refund: {$loanRefund}</p>
+        {/if}
         {#if $rents.length > 0}
             {#each $rents as item}
                 <p>
@@ -89,6 +92,7 @@
         align-items: center;
         width: 50vw;
         min-height: 78vh;
+        max-height: 78vh;
         margin-top: 12vh;
         margin-bottom: 2vh;
         border-radius: 3vh;
@@ -97,6 +101,7 @@
             0 0 10px #8080ff, 0 0 15px #8080ff, 0 0 30px #8080ff,
             inset 0 0 3px #fff, inset 0 0 5px #fff, inset 0 0 10px #8080ff,
             inset 0 0 15px #8080ff;
+        overflow: scroll;
     }
 
     #close_module {
