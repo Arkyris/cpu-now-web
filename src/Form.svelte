@@ -6,6 +6,9 @@
         loggedIn,
         rents,
         loan,
+        loanAmount,
+        loanNewAmount,
+        loanRefund,
     } from "./stores/current_user";
     import {
         totalFunds,
@@ -129,12 +132,42 @@
             expireSeconds: 30,
             broadcast: true,
         });
-        setTimeout(() => {
-            updateTotalFunds();
-        }, 3000);
-        setTimeout(() => {
-            updateAvailableFunds();
-        }, 3000);
+        if(data.action === "rent" || data.action === "add-rent") {
+            setTimeout(() => {
+                updateTotalFunds();
+                updateAvailableFunds();
+            }, 20000);
+        } else {
+            setTimeout(() => {
+                get_loan();
+            }, 20000);
+        }
+    }
+
+    async function get_loan() {
+        try {
+            const rpc = new JsonRpc(
+                `${myChain.rpcEndpoints[0].protocol}://${myChain.rpcEndpoints[0].host}:${myChain.rpcEndpoints[0].port}`
+            );
+            const data = await rpc.get_table_rows({
+                json: true,
+                code: "cpunowcntrct",
+                scope: "cpunowcntrct",
+                table: "loaners",
+                lower_bound: $acctName,
+                limit: 1,
+                reverse: false,
+                show_payer: false,
+            });
+            if (data.rows.length > 0 && data.rows[0].loaner === $acctName) {
+                $loan = true;
+                $loanAmount = data.rows[0].amount;
+                $loanNewAmount = data.rows[0].new_amount;
+                $loanRefund = data.rows[0].refunding;
+            }
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     async function getContractCost() {
@@ -166,6 +199,7 @@
             days_div.style.display = "block";
             stake_div.style.display = "block";
             amount_div.style.display = "none";
+            loan_info.style.display = "none";
             actionVal = action.value;
             amountVal = amount.value;
         } else if (
@@ -176,6 +210,7 @@
             days_div.style.display = "none";
             stake_div.style.display = "none";
             amount_div.style.display = "block";
+            loan_info.style.display = "block";
             actionVal = action.value;
             amountVal = amount.value;
         } else {
@@ -183,14 +218,15 @@
             days_div.style.display = "none";
             stake_div.style.display = "none";
             amount_div.style.display = "none";
+            loan_info.style.display = "block";
             actionVal = action.value;
             amountVal = 0.0;
         }
     }
     async function openStats() {
         thisRents = [];
-        $rent = await getRentStats($acctName);
         statsModule.style.display = "block";
+        $rent = await getRentStats($acctName);
     }
     function updateRent() {
         $rents = $rent;
@@ -243,6 +279,12 @@
                         value="50"
                         step="50"
                     />
+                </div>
+                <div id="loan_info">
+                    <p>
+                        Loan: {$loanAmount}<br />New Loan: {$loanNewAmount}<br />Loan
+                        Refund: {$loanRefund}
+                    </p>
                 </div>
                 <div id="amount_div" class="input-div">
                     <label for="amount">Amount</label>
@@ -319,6 +361,17 @@
     }
     #amount_div {
         display: none;
+    }
+
+    #loan_info {
+        display: none;
+    }
+
+    p {
+        font-size: 2vh;
+        color: rgb(205, 251, 255);
+        text-shadow: 0 0 1vh #fff;
+        margin-top: 0;
     }
 
     .button_div {

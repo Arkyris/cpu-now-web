@@ -19,7 +19,7 @@ export async function getRentStats(account) {
     const scopes = ["waxcpunow111", "waxcpunow112", "waxcpunow113", "waxcpunow114", "waxcpunow115", "waxcpunow121", "waxcpunow122", "waxcpunow123", "waxcpunow124", "waxcpunow125", "waxcpunow131", "waxcpunow132", "waxcpunow133", "waxcpunow134", "waxcpunow135", "waxcpunow141", "waxcpunow142", "waxcpunow143", "waxcpunow144", "waxcpunow145", "waxcpunow151", "waxcpunow152", "waxcpunow153", "waxcpunow154", "waxcpunow155", "waxcpunow211", "waxcpunow212", "waxcpunow213", "waxcpunow214", "waxcpunow215", "waxcpunow221", "waxcpunow222", "waxcpunow223", "waxcpunow224", "waxcpunow225", "waxcpunow231"];
     let thisRents = [];
     let it = 0;
-    scopes.forEach(async (element) => {
+    for (const scope of scopes) {
         try {
             const rpc = new JsonRpc(
                 `${myChain.rpcEndpoints[it].protocol}://${myChain.rpcEndpoints[it].host}:${myChain.rpcEndpoints[it].port}`
@@ -27,7 +27,7 @@ export async function getRentStats(account) {
             const data = await rpc.get_table_rows({
                 json: true,
                 code: "cpunowcntrct",
-                scope: element,
+                scope: scope,
                 table: "renters",
                 lower_bound: account,
                 limit: 1,
@@ -39,16 +39,15 @@ export async function getRentStats(account) {
                 //console.log(data);
             }
             it++;
-            if(it >= myChain.rpcEndpoints.length) {
+            if (it >= myChain.rpcEndpoints.length) {
                 it = 0;
             }
             console.log(it);
         } catch (e) {
             console.error(e);
-        }
-    })
-    //console.log(thisRents);
-    return thisRents;
+        };
+    }
+return thisRents;
 };
 
 export const loggedIn = writable(false);

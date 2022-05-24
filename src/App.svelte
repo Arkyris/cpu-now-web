@@ -37,15 +37,12 @@
 </script>
 
 <main>
-	<!--<div>
-		<GoogleAnalytics properties={[ '311302713' ]} />
-	</div>-->
 	<div id="header_div">
 		<Header
 			links={[
 				{ title: "Form", url: "#form" },
 				{ title: "About", url: "#about" },
-				{title: "How To", url: "#how"},
+				{title: "How-To", url: "#how"},
 				{title: "FAQ", url: "#faq"},
 			]}
 		/>

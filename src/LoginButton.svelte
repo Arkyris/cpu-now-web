@@ -1,7 +1,7 @@
 <script>
     import { Anchor } from "@arkyris/ual-anchor";
     import { Wax } from "@arkyris/ual-wax";
-    import { UALJs } from "ual-plainjs-renderer";
+    import { UALJs } from "@arkyris/ual-plainjs-renderer";
     import {
         loggedInUser,
         setUser,

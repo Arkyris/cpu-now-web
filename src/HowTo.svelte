@@ -1,6 +1,6 @@
 <div id="how_to_bg">
     <div id="how_to_title">
-        <h1>How To</h1>
+        <h1>How-To</h1>
     </div>
     <div id="how_to">
         <div id="actions">

@@ -19,6 +19,9 @@
     export let links = [];
     let showMobileMenu = false;
 
+    const measurement_id = `G-FDG9WCVWSF`;
+    const api_secret = `p9-2UKymRkGtQGWfJTLgsA`;
+
     onMount(() => {
         updateAvailableFunds();
         updateTotalFunds();
@@ -123,6 +126,22 @@
             showMobileMenu = false;
         }
     };
+
+    async function sendClickEventGA(event) {
+        if(event === "How-To"){
+            event = "How_To";
+        }
+        fetch(`https://www.google-analytics.com/mp/collect?measurement_id=${measurement_id}&api_secret=${api_secret}`, {
+            method: "POST",
+            body: JSON.stringify({
+                client_id: 'none',
+                events: [{
+                name: event,
+                params: {},
+                }]
+            })
+        });
+    }
 </script>
 
 <header class="header">
@@ -136,7 +155,7 @@
             </div>
             <ul class={`navbar-list${showMobileMenu ? " mobile" : ""}`}>
                 {#each links as link}
-                    <a href={link.url} on:click={closeMobileMenu}
+                    <a href={link.url} on:click={closeMobileMenu} on:click={sendClickEventGA(link.title)}
                         >{link.title}</a
                     >
                 {/each}
