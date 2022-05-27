@@ -21,7 +21,7 @@
     h1 {
         font-family: "neoncity";
         color: #fff;
-        font-size: 5vh;
+        font-size: 4vh;
         font-weight: 1;
         padding: 1.5vh;
         margin: 0;
@@ -32,13 +32,15 @@
 
     h2 {
         color: rgb(205, 251, 255);
+        font-size: 2.7vh;
         text-shadow: 0 0 1vh #fff;
     }
 
     p {
-        font-size: 1.5vw;
+        font-size: 2.2vh;
         color: rgb(205, 251, 255);
         text-shadow: 0 0 1vh #fff;
+        padding: 1vh;
     }
 
     #about_bg {

@@ -1,6 +1,6 @@
 <div id="how_to_bg">
     <div id="how_to_title">
-        <h1>How To</h1>
+        <h1>How-To</h1>
     </div>
     <div id="how_to">
         <div id="actions">
@@ -54,7 +54,7 @@
     h1 {
         font-family: "neoncity";
         color: #fff;
-        font-size: 5vh;
+        font-size: 4vh;
         font-weight: 1;
         padding: 1.5vh;
         margin: 0;
@@ -65,7 +65,7 @@
     h2 {
         font-family: "neoncity";
         color: #fff;
-        font-size: 4vh;
+        font-size: 3.5vh;
         font-weight: 1;
         color: rgb(205, 251, 255);
         text-shadow: 0 0 1vh #fff;
@@ -76,7 +76,7 @@
     }
 
     p {
-        font-size: 1.5vw;
+        font-size: 2.2vh;
         color: rgb(205, 251, 255);
         text-shadow: 0 0 1vh #fff;
         margin-top: 0;
@@ -98,6 +98,7 @@
         width: auto;
         height: auto;
         border-radius: 3vh;
+        margin-bottom: 2vh;
         box-shadow: 0 0 0.5vh #fff, 0 0 1vh #fff, 0 0 1vh #8080ff,
             0 0 2vh #8080ff, 0 0 4vh #8080ff, inset 0 0 0.5vh #fff,
             inset 0 0 1vh #fff, 0 0 1vh #8080ff, 0 0 2vh #8080ff;
@@ -121,7 +122,6 @@
         max-width: 97%;
         width: auto;
         height: auto;
-        margin-top: 2vh;
         border-radius: 3vh;
     }
 </style>

@@ -1,6 +1,16 @@
 <script>
     import { onMount } from "svelte";
-    import { rents, otherRents, accountBalance, getRentStats, otherRent, rent } from "./stores/current_user";
+    import {
+        rents,
+        otherRents,
+        getRentStats,
+        otherRent,
+        rent,
+        loan,
+        loanAmount,
+        loanNewAmount,
+        loanRefund,
+    } from "./stores/current_user";
 
     let statsModule;
     let thisRents;
@@ -10,7 +20,6 @@
     onMount(() => {
         statsModule = document.getElementById("stats_div");
         otherRentUpdateInterval = setInterval(updateRent, 250);
-
     });
 
     function closeStats() {
@@ -40,6 +49,12 @@
     <button id="close_module" on:click={closeStats}>X</button>
     <div id="logged_in_div" bind:this={$rents}>
         <h1>Your Account</h1>
+        {#if $loan === true}
+            <p>
+                Loan: {$loanAmount}<br />New Loan: {$loanNewAmount}<br />Loan
+                Refund: {$loanRefund}
+            </p>
+        {/if}
         {#if $rents.length > 0}
             {#each $rents as item}
                 <p>
@@ -52,8 +67,8 @@
             <p>Not Currently Renting</p>
         {/if}
     </div>
-    <div id="divider_div"><p id="div_p"></p></div>
-    <div id="recipient_div">
+    <div id="divider_div"><p id="div_p" /></div>
+    <div id="recipient_div" bind:this={$otherRents}>
         <h1>Find Account</h1>
         <form on:submit|preventDefault={onSubmit}>
             <input
@@ -75,7 +90,6 @@
             {:else}
                 <p>Not Currently Renting</p>
             {/if}
-           
         </form>
     </div>
 </div>
@@ -89,6 +103,7 @@
         align-items: center;
         width: 50vw;
         min-height: 78vh;
+        max-height: 78vh;
         margin-top: 12vh;
         margin-bottom: 2vh;
         border-radius: 3vh;
@@ -97,6 +112,7 @@
             0 0 10px #8080ff, 0 0 15px #8080ff, 0 0 30px #8080ff,
             inset 0 0 3px #fff, inset 0 0 5px #fff, inset 0 0 10px #8080ff,
             inset 0 0 15px #8080ff;
+        overflow: scroll;
     }
 
     #close_module {
@@ -162,15 +178,14 @@
         margin-bottom: 20px;
         border-radius: 1vh;
         background-color: #000;
-        box-shadow: 0 0 5px #fff, 0 0 8px #fff, 0 0 5px #f0f,
-            0 0 10px #f0f, 0 0 15px #f0f, 0 0 30px #f0f,
-            inset 0 0 3px #fff, inset 0 0 5px #fff, inset 0 0 10px #f0f,
-            inset 0 0 15px #f0f;
+        box-shadow: 0 0 5px #fff, 0 0 8px #fff, 0 0 5px #f0f, 0 0 10px #f0f,
+            0 0 15px #f0f, 0 0 30px #f0f, inset 0 0 3px #fff, inset 0 0 5px #fff,
+            inset 0 0 10px #f0f, inset 0 0 15px #f0f;
     }
 
-    #div_p{
+    #div_p {
         height: 1px;
-        padding: .5%;
+        padding: 0.5%;
         margin: 0;
     }
 

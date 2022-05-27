@@ -1,4 +1,4 @@
-export async function buildTX(accountName, accountFunds, data, cost) {
+export async function buildTX(accountName, data, cost, loan) {
     let actionArray = [];
     let newAction;
     let actionObj;
@@ -6,185 +6,15 @@ export async function buildTX(accountName, accountFunds, data, cost) {
     let costString;
     let amountString;
 
+    if (data.recipient === "") {
+        data.recipient = accountName;
+    }
+
     // Rent
     if (data.action === 'rent') {
         costString = await makeCostString(cost);
-        // Check for open account
-        if (accountFunds === 'no account') {
-            newAction = JSON.stringify({
-                account: 'cpunowcntrct',
-                name: 'openaccount',
-                authorization: [{
-                    actor: accountName,
-                    permission: 'active',
-                }],
-                data: {
-                    owner: accountName,
-                },
-            });
-            actionObj = JSON.parse(newAction);
-            actionArray.push(actionObj);
-            // Send funds
-            newAction = JSON.stringify({
-                account: 'eosio.token',
-                name: 'transfer',
-                authorization: [{
-                    actor: accountName,
-                    permission: 'active',
-                }],
-                data: {
-                    from: accountName,
-                    to: 'cpunowcntrct',
-                    quantity: costString,
-                    memo: '1',
-                },
-            });
-            actionObj = JSON.parse(newAction);
-            actionArray.push(actionObj);
-        }
-        //Send funds if none available
-        if (parseFloat(accountFunds) < cost) {
-            costString = await makeCostString(cost - parseFloat(accountFunds));
-            newAction = JSON.stringify({
-                account: 'eosio.token',
-                name: 'transfer',
-                authorization: [{
-                    actor: accountName,
-                    permission: 'active',
-                }],
-                data: {
-                    from: accountName,
-                    to: 'cpunowcntrct',
-                    quantity: costString,
-                    memo: '1',
-                },
-            });
-            actionObj = JSON.parse(newAction);
-            actionArray.push(actionObj);
-        }
 
-
-        // Send rent action
-        if (data.recipient === "") {
-            recipient = accountName;
-        } else {
-            recipient = data.recipient;
-        };
-        newAction = JSON.stringify({
-            account: 'cpunowcntrct',
-            name: 'rent',
-            authorization: [{
-                actor: accountName,
-                permission: 'active',
-            }],
-            data: {
-                payer: accountName,
-                recipient: recipient,
-                days: parseFloat(data.days) * 2,
-                amount_to_stake: parseInt(data.stake),
-            },
-        });
-        actionObj = JSON.parse(newAction);
-        actionArray.push(actionObj);
-    }
-
-    // Add rent
-    if (data.action === "add-rent") {
-        costString = await makeCostString(cost);
-        if (accountFunds === 'no account') {
-            newAction = JSON.stringify({
-                account: 'cpunowcntrct',
-                name: 'openaccount',
-                authorization: [{
-                    actor: accountName,
-                    permission: 'active',
-                }],
-                data: {
-                    owner: accountName,
-                },
-            });
-            actionObj = JSON.parse(newAction);
-            actionArray.push(actionObj);
-        }
-        // Send funds if none available
-        if (parseFloat(accountFunds) < cost) {
-            costString = await makeCostString(cost - parseFloat(accountFunds));
-            newAction = JSON.stringify({
-                account: 'eosio.token',
-                name: 'transfer',
-                authorization: [{
-                    actor: accountName,
-                    permission: 'active',
-                }],
-                data: {
-                    from: accountName,
-                    to: 'cpunowcntrct',
-                    quantity: costString,
-                    memo: '1',
-                },
-            });
-            actionObj = JSON.parse(newAction);
-            actionArray.push(actionObj);
-        }
-        // Send add rent action
-        if (data.recipient === "") {
-            recipient = accountName;
-        } else {
-            recipient = data.recipient;
-        };
-
-        newAction = JSON.stringify({
-            account: 'cpunowcntrct',
-            name: 'addrent',
-            authorization: [{
-                actor: accountName,
-                permission: 'active',
-            }],
-            data: {
-                payer: accountName,
-                recipient: recipient,
-                days: parseFloat(data.days) * 2,
-                amount_to_stake: parseInt(data.stake),
-            },
-        });
-        actionObj = JSON.parse(newAction);
-        actionArray.push(actionObj);
-    }
-
-    if(data.action === "open-account"){
-        newAction = JSON.stringify({
-            account: 'cpunowcntrct',
-            name: 'openaccount',
-            authorization: [{
-                actor: accountName,
-                permission: 'active',
-            }],
-            data: {
-                owner: accountName,
-            },
-        });
-        actionObj = JSON.parse(newAction);
-        actionArray.push(actionObj);
-    }
-    // Add blance
-    if (data.action === "add-funds") {
-        amountString = await makeCostString(parseFloat(data.amount));
-        if (accountFunds === 'no account') {
-            newAction = JSON.stringify({
-                account: 'cpunowcntrct',
-                name: 'openaccount',
-                authorization: [{
-                    actor: accountName,
-                    permission: 'active',
-                }],
-                data: {
-                    owner: accountName,
-                },
-            });
-            actionObj = JSON.parse(newAction);
-            actionArray.push(actionObj);
-        }
-        // Send Funds
+        //Send funds
         newAction = JSON.stringify({
             account: 'eosio.token',
             name: 'transfer',
@@ -195,43 +25,129 @@ export async function buildTX(accountName, accountFunds, data, cost) {
             data: {
                 from: accountName,
                 to: 'cpunowcntrct',
-                quantity: amountString,
-                memo: '1',
+                quantity: costString,
+                memo: `rent ${data.recipient} ${data.stake} ${data.days * 2}`,
             },
         });
         actionObj = JSON.parse(newAction);
         actionArray.push(actionObj);
     }
 
-    if (data.action === "close-account") {
+    // Add rent
+    if (data.action === "add-rent") {
+        costString = await makeCostString(cost);
+
+        //Send funds
+        newAction = JSON.stringify({
+            account: 'eosio.token',
+            name: 'transfer',
+            authorization: [{
+                actor: accountName,
+                permission: 'active',
+            }],
+            data: {
+                from: accountName,
+                to: 'cpunowcntrct',
+                quantity: costString,
+                memo: `add-rent ${data.recipient} ${data.stake} ${data.days * 2}`,
+            },
+        });
+        actionObj = JSON.parse(newAction);
+        actionArray.push(actionObj);
+    }
+
+
+    // Loan
+    if (data.action === "add-loan") {
         amountString = await makeCostString(parseFloat(data.amount));
-        if (accountFunds != 'no account') {
+        if (loan === false) {
+            //Open Loan
             newAction = JSON.stringify({
                 account: 'cpunowcntrct',
-                name: 'closeaccount',
+                name: 'openloan',
                 authorization: [{
                     actor: accountName,
                     permission: 'active',
                 }],
                 data: {
-                    account: accountName,
+                    owner: accountName,
+                },
+            });
+            actionObj = JSON.parse(newAction);
+            actionArray.push(actionObj);
+
+            //Send funds
+            newAction = JSON.stringify({
+                account: 'eosio.token',
+                name: 'transfer',
+                authorization: [{
+                    actor: accountName,
+                    permission: 'active',
+                }],
+                data: {
+                    from: accountName,
+                    to: 'cpunowcntrct',
+                    quantity: amountString,
+                    memo: `add-loan`,
                 },
             });
             actionObj = JSON.parse(newAction);
             actionArray.push(actionObj);
         } else {
-            console.log("No Account Found");
+            //Send funds
+            newAction = JSON.stringify({
+                account: 'eosio.token',
+                name: 'transfer',
+                authorization: [{
+                    actor: accountName,
+                    permission: 'active',
+                }],
+                data: {
+                    from: accountName,
+                    to: 'cpunowcntrct',
+                    quantity: amountString,
+                    memo: `add-loan`,
+                },
+            });
+            actionObj = JSON.parse(newAction);
+            actionArray.push(actionObj);
         }
     }
 
-    // Loan
-    if (data.action === "loan") {
-
+    if (data.action === "remove-loan") {
+        amountString = await makeCostString(parseFloat(data.amount));
+        //Remove Loan
+        newAction = JSON.stringify({
+            account: 'cpunowcntrct',
+            name: 'removeloan',
+            authorization: [{
+                actor: accountName,
+                permission: 'active',
+            }],
+            data: {
+                loaner: accountName,
+                amount: amountString
+            },
+        });
+        actionObj = JSON.parse(newAction);
+        actionArray.push(actionObj);
     }
 
-    // Add loan
-    if (data.action === "add-loan") {
-
+    if (data.action === "claim-refund") {
+        //Send funds
+        newAction = JSON.stringify({
+            account: 'cpunowcntrct',
+            name: 'claimrefund',
+            authorization: [{
+                actor: accountName,
+                permission: 'active',
+            }],
+            data: {
+                loaner: accountName,
+            },
+        });
+        actionObj = JSON.parse(newAction);
+        actionArray.push(actionObj);
     }
 
     return { actions: actionArray };

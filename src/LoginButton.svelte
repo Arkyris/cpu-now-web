@@ -1,11 +1,20 @@
 <script>
     import { Anchor } from "@arkyris/ual-anchor";
     import { Wax } from "@arkyris/ual-wax";
-    import { UALJs } from "ual-plainjs-renderer";
-    import { loggedInUser, setUser, acctName } from "./stores/current_user";
+    import { UALJs } from "@arkyris/ual-plainjs-renderer";
+    import {
+        loggedInUser,
+        setUser,
+        acctName,
+        loan,
+        loanAmount,
+        loanNewAmount,
+        loanRefund,
+    } from "./stores/current_user";
     import { onMount } from "svelte";
     import { User } from "universal-authenticator-library";
     import { myChain } from "./stores/chainInfo";
+    import { JsonRpc } from "eosjs";
 
     let myAppRoot;
     let ual;
@@ -25,6 +34,7 @@
             console.info("Account Name:", await loggedInUser.getAccountName());
             console.info("Chain Id:", await loggedInUser.getChainId());
             $acctName = await loggedInUser.getAccountName();
+            get_loan();
         };
         const myAppName = "CPU Now";
 
@@ -76,6 +86,7 @@
             $acctName = "";
             ual.logoutUser(loggedInUser);
             setUser(new User());
+            $loan = false;
         });
     };
 
@@ -86,6 +97,32 @@
         } else {
             login.style.display = "inline-block";
             logout_button.style.display = "none";
+        }
+    }
+
+    async function get_loan() {
+        try {
+            const rpc = new JsonRpc(
+                `${myChain.rpcEndpoints[0].protocol}://${myChain.rpcEndpoints[0].host}:${myChain.rpcEndpoints[0].port}`
+            );
+            const data = await rpc.get_table_rows({
+                json: true,
+                code: "cpunowcntrct",
+                scope: "cpunowcntrct",
+                table: "loaners",
+                lower_bound: $acctName,
+                limit: 1,
+                reverse: false,
+                show_payer: false,
+            });
+            if (data.rows.length > 0 && data.rows[0].loaner === $acctName) {
+                $loan = true;
+                $loanAmount = data.rows[0].amount;
+                $loanNewAmount = data.rows[0].new_amount;
+                $loanRefund = data.rows[0].refunding;
+            }
+        } catch (e) {
+            console.error(e);
         }
     }
 </script>
@@ -107,7 +144,7 @@
         color: white;
         font-family: "neoncity";
         font-size: 1.5vw;
-        letter-spacing: .1vw;
+        letter-spacing: 0.1vw;
         text-align: center;
         border-radius: 2.5vh;
         width: 8vw;
