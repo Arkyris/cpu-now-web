@@ -30,19 +30,28 @@
             </div>
             <div class="action">
                 <div class="action_title">
-                    <h2>Add Funds</h2>
+                    <h2>Loan</h2>
                     <p>
-                        When you rent an account is open on the contract in your
-                        name. You can add extra funds so they are ready to go
-                        the next time you need some CPU.
+                        Have spare WAX? You can loan to the rental pool and
+                        earn. Every 12 hours the rental fees are divied up and
+                        sent directly to your loaned amount. Which means your
+                        loan will automatically compound. You can withdraw at
+                        any time. You must be in one full epoch to start
+                        earning. Please check the discord for more info or
+                        questions.
                     </p>
                 </div>
             </div>
             <div class="action">
                 <div class="action_title">
-                    <h2>Close Account</h2>
+                    <h2>Remove Loan</h2>
                     <p>
-                        This will send back your funds and close the account. You can open a new one at any time.
+                        This will remove the requested amount from your loan. If
+                        the contract currently doesn't have the funds to refund
+                        you in full the excess will be added to your refunding
+                        amount. You can use the claim refund action to claim
+                        this remainder when new funds are released from rentals.
+                        Which happens every 2 hours. Please check the discord for more info or questions.
                     </p>
                 </div>
             </div>
@@ -76,7 +85,7 @@
     }
 
     p {
-        font-size: 2.2vh;
+        font-size: 1.5vw;
         color: rgb(205, 251, 255);
         text-shadow: 0 0 1vh #fff;
         margin-top: 0;

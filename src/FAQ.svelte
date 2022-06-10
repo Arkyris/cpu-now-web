@@ -14,10 +14,13 @@
                         Here at CPU Now! our goal is for rental to be a benefit
                         for many every day users. What if you could take your
                         staked WAX and use it to earn more than the cost to
-                        rent. Make your WAX work for you. We may not quite be
-                        there yet, but with our next major service update and
-                        ever decreasing fees we believe this concept will really
-                        shine.
+                        rent. Make your WAX work for you. With our loan program
+                        this concept can really shine. Rent as you go. Loaning
+                        earns more than staking and when you're not as active on
+                        the chain, your idle wax will be earning. When you need
+                        a little more CPU come back and rent for the lowest rate
+                        around. Please check out the discord for more in depth
+                        info or questions.
                     </p>
                 </div>
             </div>

@@ -6,7 +6,7 @@ export const myChain = {
     rpcEndpoints: [
         {
             protocol: "https",
-            host: "wax.greymass.com",
+            host: "api.waxsweden.org",
             port: "443",
         },
         {
@@ -16,12 +16,12 @@ export const myChain = {
         },
         {
             protocol: "https",
-            host: "wax.cryptolions.io",
+            host: "wax.greymass.com",
             port: "443",
         },
         {
             protocol: "https",
-            host: "api.waxsweden.org",
+            host: "wax.cryptolions.io",
             port: "443",
         },
     ],
