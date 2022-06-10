@@ -10,9 +10,12 @@
     } from "./stores/current_user";
     import {
         totalFunds,
-        totalFundsUpdateInterval,
         availableFunds,
         availableFundsUpdateInterval,
+        payoutAmount,
+        nextPayoutTimeDisplay,
+        payoutTotalAmount,
+        payoutLastAmount,
     } from "./stores/contractInfo";
     import { myChain } from "./stores/chainInfo";
 
@@ -22,16 +25,23 @@
     const measurement_id = `G-FDG9WCVWSF`;
     const api_secret = `p9-2UKymRkGtQGWfJTLgsA`;
 
+    let timersInterval;
+    let refundTime = Date.now();
+    $: refundTimeDisplay = 10000000;
+    $: refundAmount = refundAmount;
+
+    let nextPayoutTime = refundTime;
+
+
     onMount(() => {
         updateAvailableFunds();
-        updateTotalFunds();
         $walletBalanceUpdateInterval = setInterval(updateWalletBalance, 1000);
-        $totalFundsUpdateInterval = setInterval(updateTotalFunds, 30000);
         $availableFundsUpdateInterval = setInterval(
             updateAvailableFunds,
             30000
         );
-
+        newFunds();
+        timersInterval = setInterval(subtractSeconds, 1000);
         // Attach media query listener on mount hook
         const mediaListener = window.matchMedia("(max-width: 767px)");
         mediaListener.addEventListener("change", function (event) {
@@ -59,25 +69,7 @@
             console.error(e);
         }
     };
-    async function updateTotalFunds() {
-        try {
-            const rpc = new JsonRpc(
-                `${myChain.rpcEndpoints[0].protocol}://${myChain.rpcEndpoints[0].host}:${myChain.rpcEndpoints[0].port}`
-            );
-            const data = await rpc.get_table_rows({
-                json: true,
-                code: "cpunowcntrct",
-                scope: "cpunowcntrct",
-                table: "contstate",
-                limit: 1,
-                reverse: false,
-                show_payer: false,
-            });
-            $totalFunds = data.rows[0].total_funds;
-        } catch (e) {
-            console.error(e);
-        }
-    }
+
     async function updateAvailableFunds() {
         try {
             const rpc = new JsonRpc(
@@ -105,9 +97,49 @@
             } else {
                 $availableFunds = "0.00000000";
             }
+            $totalFunds = data.rows[0].total_funds;
+            $payoutAmount = data.rows[0].bidaily_loaners_payout.slice(0, -10) + " WAX";
+            $payoutTotalAmount = data.rows[0].total_payout.slice(0, -10) + " WAX";
+            $payoutLastAmount = data.rows[0].last_payout.slice(0, -10) + " WAX";
+            nextPayoutTime = data.rows[0].time_of_next_payout - (Date.now()/1000);
         } catch (e) {
             console.error(e);
         }
+    }
+    async function newFunds() {
+        try {
+            const rpc = new JsonRpc(
+                `${myChain.rpcEndpoints[0].protocol}://${myChain.rpcEndpoints[0].host}:${myChain.rpcEndpoints[0].port}`
+            );
+            const data = await rpc.get_table_rows({
+                json: true,
+                code: "cpunowcntrct",
+                scope: "cpunowcntrct",
+                table: "refund",
+                limit: 50,
+                reverse: false,
+                show_payer: false,
+            });
+            refundTime = data.rows[0].time_of_refund;
+            for (const row of data.rows){
+                if(row.time_of_refund < refundTime && row.amount_refunding.slice(0, -3) > 0) {
+                    refundTime = row.time_of_refund;
+                    refundAmount = row.amount_refunding.slice(0, -13);
+                } 
+            }
+            let now = Math.round(Date.now() / 1000);
+            refundTime = refundTime - now;
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    function subtractSeconds() {
+        refundTime -= 1;
+        refundTimeDisplay = new Date(refundTime * 1000).toISOString().substring(11, 19);
+
+        nextPayoutTime -= 1;
+        $nextPayoutTimeDisplay = new Date(nextPayoutTime * 1000).toISOString().substring(11, 19);
     }
 
     // Mobile menu click event handler
@@ -163,11 +195,13 @@
         </div>
     </nav>
     <div class="info_div">
-        <p>Welcome {$acctName}:<br />{$walletBalance}</p>
+        <p>Welcome: {$acctName}<br />{$walletBalance}</p>
         <div class="div" />
-        <p>Total Funds:<br />{$totalFunds}</p>
+        <p>Total Rent Funds:<br />{$totalFunds.slice(0, -13)} WAX</p>
         <div class="div" />
-        <p>Available Funds:<br />{$availableFunds} WAX</p>
+        <p>Available Rent Funds:<br />{$availableFunds.slice(0, -9)} WAX</p>
+        <div class="div" />
+        <p>New Funds: {refundAmount} WAX<br /> In: {refundTimeDisplay}</p>
     </div>
     <div class="inner_header_div">
         <LoginButton />
@@ -190,7 +224,7 @@
     }
     p {
         flex-direction: row;
-        font-size: 1.5vw;
+        font-size: 1.2vw;
         color: rgb(205, 251, 255);
         text-shadow: 0 0 1vh #fff;
         top: 1.5vh;
@@ -207,17 +241,18 @@
     .div {
         width: 0.5px;
         height: 6vh;
-        margin: 1vh;
+        margin-left: .5vw;
+        margin-right: .5vw;
         background-color: rgba(255, 255, 255, 0.253);
         box-shadow: 0 0 0.5vh 0.05vh #fff, 0 0 1vh 0.06vh #fff,
             0 0 1vh 0.07vh #fff, 0 0 1vh 0.08vh #f0f, 0 0 2vh 0.09vh #f0f,
-            0 0 2vh 0.3vh #f0f, 0 0 2.5vh 0.4vh #f0f;
+            0 0 2vh 0.3vh #f0f, 0 0 2vh 0.4vh #f0f;
     }
 
     .info_div {
         display: flex;
         position: relative;
-        width: 80vw;
+        width: 90vw;
         justify-content: center;
         align-items: center;
         height: 90%;
@@ -353,8 +388,8 @@
 
         .navbar-list a {
             display: inline-flex;
-            left: 1.5vh;
-            margin-right: 1.5vw;
+            left: 1vh;
+            margin-right: 1vw;
             box-shadow: 0 0 0.5vh #fff, 0 0 1vh #fff, 0 0 1vh #8080ff,
                 0 0 2vh #8080ff, 0 0 3vh #8080ff, inset 0 0 0.5vh #fff,
                 inset 0 0 1vh #8080ff, inset 0 0 2vh #8080ff;
@@ -363,7 +398,7 @@
         .info_div {
             display: flex;
             position: relative;
-            width: 50vw;
+            width: 55vw;
             justify-content: center;
         }
     }

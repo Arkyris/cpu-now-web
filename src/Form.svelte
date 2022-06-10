@@ -14,6 +14,11 @@
         totalFunds,
         availableFunds,
         contractCost,
+        availableClaimFunds,
+        nextPayoutTimeDisplay,
+        payoutAmount,
+        payoutTotalAmount,
+        payoutLastAmount,
     } from "./stores/contractInfo";
     import { myChain } from "./stores/chainInfo";
     import { JsonRpc } from "eosjs";
@@ -22,12 +27,15 @@
 
     let daysValue = 3;
     let cost;
+    let bonus;
     let costUpdateInterval;
     let formUpdateInterval;
     let rentUpdateInterval;
     let actionVal;
     let amountVal;
     let statsModule;
+    let claimFunds;
+    let removeFunds;
     let thisRents = [];
 
     onMount(() => {
@@ -185,12 +193,14 @@
                 show_payer: false,
             });
             $contractCost = data.rows[0].rent_cost;
+            $availableClaimFunds = data.rows[0].available_funds;
         } catch (e) {
             console.error(e);
         }
     }
     function updateCost() {
         cost = parseFloat($contractCost) * daysValue * (stake.value / 50);
+        bonus = Math.floor(stake.value / 300) * 30;
         //console.log(stake.value/50);
     }
     function updateForm() {
@@ -198,30 +208,67 @@
             document.getElementById("recipient_div").style.display = "block";
             days_div.style.display = "block";
             stake_div.style.display = "block";
+            submit_button_div.style.display = "block";
             amount_div.style.display = "none";
             loan_info.style.display = "none";
+            claim_button_div.style.display = "none";
             actionVal = action.value;
             amountVal = amount.value;
         } else if (
-            action.value === "add-loan" ||
-            action.value === "remove-loan"
+            action.value === "add-loan"    
         ) {
             document.getElementById("recipient_div").style.display = "none";
             days_div.style.display = "none";
             stake_div.style.display = "none";
+            submit_button_div.style.display = "block";
+            amount_div.style.display = "block";
+            loan_info.style.display = "block";
+            claim_button_div.style.display = "none";
+            actionVal = action.value;
+            amountVal = amount.value;
+        } else if(action.value === "remove-loan" && $loanAmount != "no loan") {
+            document.getElementById("recipient_div").style.display = "none";
+            days_div.style.display = "none";
+            stake_div.style.display = "none";
+            submit_button_div.style.display = "none";
+            claim_button_div.style.display = "block";
             amount_div.style.display = "block";
             loan_info.style.display = "block";
             actionVal = action.value;
             amountVal = amount.value;
-        } else {
+        } else if(action.value === "remove-loan" && $loanAmount === "no loan") {
             document.getElementById("recipient_div").style.display = "none";
             days_div.style.display = "none";
             stake_div.style.display = "none";
+            submit_button_div.style.display = "none";
+            claim_button_div.style.display = "none";
             amount_div.style.display = "none";
             loan_info.style.display = "block";
             actionVal = action.value;
-            amountVal = 0.0;
+            amountVal = amount.value;
+        } else if(action.value === "claim-refund" && $loanRefund != "no refund") {
+            document.getElementById("recipient_div").style.display = "none";
+            days_div.style.display = "none";
+            stake_div.style.display = "none";
+            submit_button_div.style.display = "none";
+            claim_button_div.style.display = "block";
+            amount_div.style.display = "none";
+            loan_info.style.display = "block";
+            actionVal = action.value;
+            amountVal = amount.value;
+        } else if(action.value === "claim-refund" && $loanRefund === "no refund") {
+            document.getElementById("recipient_div").style.display = "none";
+            days_div.style.display = "none";
+            stake_div.style.display = "none";
+            submit_button_div.style.display = "none";
+            claim_button_div.style.display = "none";
+            amount_div.style.display = "none";
+            loan_info.style.display = "block";
+            actionVal = action.value;
+            amountVal = amount.value;
         }
+        claimFunds = $loanRefund;
+        removeFunds = amountVal;
     }
     async function openStats() {
         thisRents = [];
@@ -279,28 +326,44 @@
                         value="50"
                         step="50"
                     />
+                    <p>{bonus} Bonus WAX</p>
                 </div>
                 <div id="loan_info">
+                    <h2>Your Loan Stats</h2>
                     <p>
                         Loan: {$loanAmount}<br />New Loan: {$loanNewAmount}<br />Loan
-                        Refund: {$loanRefund}
+                        Refund: {$loanRefund}<br /><br />
+                    </p>
+                    <h2>Payout Stats</h2>
+                    <p>
+                        Next payout in: {$nextPayoutTimeDisplay}<br />
+                        Current payout pool: {$payoutAmount}<br />
+                        <span>(will grow as more CPU is rented)</span><br />
+                        Last payout: {$payoutLastAmount}<br />
+                        Lifetime payout: {$payoutTotalAmount}<br />
                     </p>
                 </div>
                 <div id="amount_div" class="input-div">
                     <label for="amount">Amount</label>
                     <input type="float" id="amount" name="amount" value="0.0" />
                 </div>
-                <div class="button_div">
+                <div id="submit_button_div">
                     <button id="submit_button" type="submit"
                         >{actionVal === "rent" || actionVal === "add-rent"
-                            ? `${cost.toFixed(8)} WAX`
-                            : `${amountVal} WAX`}</button
+                            ? `Send: ${cost.toFixed(4)} WAX`
+                            : `Send: ${amountVal} WAX`}</button
                     >
+                </div>
+                <div id="claim_button_div">
+                    <button id="claim_button" type="submit"
+                    >{actionVal === "remove-loan"
+                            ? `Get: ${removeFunds} WAX`
+                            : `Get: ${claimFunds}`}</button>
                 </div>
             </form>
         </div>
         <div class="button_div">
-            <button id="get_stats" on:click={openStats}>Account Stats</button>
+            <button id="get_stats" on:click={openStats}>Your Rent/Loan Info</button>
         </div>
     </div>
 </div>
@@ -342,6 +405,7 @@
         height: 100%;
         padding-left: 2vw;
         padding-right: 2vw;
+        margin-top: 5px;
     }
 
     .input-div {
@@ -372,6 +436,24 @@
         color: rgb(205, 251, 255);
         text-shadow: 0 0 1vh #fff;
         margin-top: 0;
+        margin-bottom: 5px;
+    }
+    span {
+        font-size: 1.5vh;
+        padding: 0;
+        margin: 0;
+    }
+    h2 {
+        font-family: "neoncity";
+        color: #fff;
+        font-size: 2.5vh;
+        font-weight: 1;
+        color: rgb(205, 251, 255);
+        text-shadow: 0 0 1vh #fff;
+        margin: 0;
+        letter-spacing: 0.6vw;
+        text-shadow: 0 0 0.5vh #fff, 0 0 1vh #fff, 0 0 1vh #f0f, 0 0 1.5vh #f0f,
+            0 0 2vh #f0f, 0 0 3vh #f0f, 0 0 4vh #f0f, 0 0 5vh #f0f;
     }
 
     .button_div {
@@ -381,6 +463,14 @@
         position: relative;
         margin-top: 2.5vh;
         width: auto;
+    }
+
+    #submit_button_div{
+        display: block;
+    }
+
+    #claim_button_div{
+        display: none;
     }
 
     button {
