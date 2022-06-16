@@ -27,7 +27,7 @@
     import { fetchProducers } from "./stores/utils";
     import { getRentStats, rent } from "./stores/current_user";
 
-    let daysValue = 3;
+    let daysValue = 7;
     let cost;
     let bonus;
     let percentOff;
