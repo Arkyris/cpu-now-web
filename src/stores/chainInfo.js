@@ -1,4 +1,5 @@
 import { readable } from "svelte/store";
+import { writable } from 'svelte/store';
 
 export const myChain = {
     chainId:
@@ -26,3 +27,5 @@ export const myChain = {
         },
     ],
 };
+
+export const producers = writable([]);

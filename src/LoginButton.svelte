@@ -10,6 +10,8 @@
         loanAmount,
         loanNewAmount,
         loanRefund,
+        votes,
+        voteCounter,
     } from "./stores/current_user";
     import { onMount } from "svelte";
     import { User } from "universal-authenticator-library";
@@ -120,6 +122,8 @@
                 $loanAmount = data.rows[0].amount;
                 $loanNewAmount = data.rows[0].new_amount;
                 $loanRefund = data.rows[0].refunding;
+                $votes = data.rows[0].votes;
+                $voteCounter = $votes.length;
             }
         } catch (e) {
             console.error(e);

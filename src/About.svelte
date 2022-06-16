@@ -11,8 +11,10 @@
         </p>
         <h2>Our perks are simple:</h2>
         <p>
-            - Get an extra 30 WAX for every 300 you rent.<br />- Rent for 6 days
-            and get 12 hours free.
+            - Get an extra 30 WAX for every 300 you rent.<br />- Rent for 3 - 4.5 days
+            and get 5% off.<br />- Rent for 5 - 6.5 days
+            and get 10% off.<br />- Rent for 7 days or more
+            and get 15% off.
         </p>
     </div>
 </div>

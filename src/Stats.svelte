@@ -103,7 +103,6 @@
         align-items: center;
         width: 50vw;
         min-height: 78vh;
-        max-height: 78vh;
         margin-top: 12vh;
         margin-bottom: 2vh;
         border-radius: 3vh;

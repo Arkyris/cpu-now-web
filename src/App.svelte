@@ -7,6 +7,7 @@
 	import FAQ from "./FAQ.svelte";
 	import Footer from "./Footer.svelte";
 	import Stats from "./Stats.svelte";
+	import Vote from "./Vote.svelte"
 	import { rent, otherRent } from "./stores/current_user";
 
 	function clickOutside(node) {
@@ -29,10 +30,13 @@
 		};
 	}
 
-	function handleClickOutside(event) {
+	function handleClickOutsideStats(event) {
 		document.getElementById("stats_div").style.display = "none";
 		$rent = [];
 		$otherRent = [];
+	}
+	function handleClickOutsideVote(event) {
+		document.getElementById("vote_div").style.display = "none";
 	}
 </script>
 
@@ -69,8 +73,11 @@
 			<FAQ />
 		</div>
 	</a>
-	<div id="stats_div" use:clickOutside on:click_outside={handleClickOutside}>
+	<div id="stats_div" use:clickOutside on:click_outside={handleClickOutsideStats}>
 		<Stats />
+	</div>
+	<div id="vote_div" use:clickOutside on:click_outside={handleClickOutsideVote}>
+		<Vote />
 	</div>
 	<div id="footer_div">
 		<Footer />
@@ -119,6 +126,10 @@
 	}
 
 	#stats_div {
+		position: fixed;
+		display: none;
+	}
+	#vote_div {
 		position: fixed;
 		display: none;
 	}
