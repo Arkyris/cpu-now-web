@@ -150,6 +150,23 @@ export async function buildTX(accountName, data, cost, loan) {
         actionArray.push(actionObj);
     }
 
+    if(data.action === "vote") {
+        newAction = JSON.stringify({
+            account: 'cpunowcntrct',
+            name: 'vote',
+            authorization: [{
+                actor: accountName,
+                permission: 'active',
+            }],
+            data: {
+                loaner: accountName,
+                votes: data.votes,
+            },
+        });
+        actionObj = JSON.parse(newAction);
+        actionArray.push(actionObj);
+    }
+
     return { actions: actionArray };
 }
 

@@ -9,6 +9,7 @@
         loanAmount,
         loanNewAmount,
         loanRefund,
+        votes,
     } from "./stores/current_user";
     import {
         totalFunds,
@@ -20,23 +21,27 @@
         payoutTotalAmount,
         payoutLastAmount,
     } from "./stores/contractInfo";
-    import { myChain } from "./stores/chainInfo";
+    import { myChain, producers } from "./stores/chainInfo";
     import { JsonRpc } from "eosjs";
     import { buildTX } from "./stores/transaction";
+    import { fetchProducers } from "./stores/utils";
     import { getRentStats, rent } from "./stores/current_user";
 
-    let daysValue = 3;
+    let daysValue = 7;
     let cost;
     let bonus;
+    let percentOff;
     let costUpdateInterval;
     let formUpdateInterval;
     let rentUpdateInterval;
     let actionVal;
     let amountVal;
     let statsModule;
+    let voteModule;
     let claimFunds;
     let removeFunds;
     let thisRents = [];
+    let costPercent;
 
     onMount(() => {
         //updateAccountBalance();
@@ -46,6 +51,7 @@
         rentUpdateInterval = setInterval(updateRent, 250);
         getContractCost();
         statsModule = document.getElementById("stats_div");
+        voteModule = document.getElementById("vote_div");
     });
 
     /*const updateAccountBalance = async () => {
@@ -128,19 +134,14 @@
             data[key] = value;
         }
         //console.log(data);
-        let builtActions = await buildTX(
-            $acctName,
-            data,
-            cost,
-            $loan
-        );
+        let builtActions = await buildTX($acctName, data, cost, $loan);
 
         loggedInUser.signTransaction(builtActions, {
             blocksBehind: 3,
             expireSeconds: 30,
             broadcast: true,
         });
-        if(data.action === "rent" || data.action === "add-rent") {
+        if (data.action === "rent" || data.action === "add-rent") {
             setTimeout(() => {
                 updateTotalFunds();
                 updateAvailableFunds();
@@ -199,7 +200,24 @@
         }
     }
     function updateCost() {
-        cost = parseFloat($contractCost) * daysValue * (stake.value / 50);
+        if(daysValue < 3.0){
+            cost = parseFloat($contractCost) * daysValue * (stake.value / 50);
+            percentOff = 0;
+        } else if (daysValue >= 3.0 && daysValue < 5.0) {
+            costPercent = (((stake.value / 50) * parseFloat($contractCost) * daysValue) * 5) / 100;
+            cost = (parseFloat($contractCost) * daysValue * (stake.value / 50)) - costPercent;
+            percentOff = 5;
+        } else if (daysValue >= 5.0 && daysValue < 7.0) {
+            costPercent = (((stake.value / 50) * parseFloat($contractCost) * daysValue) * 10) / 100;
+            cost = (parseFloat($contractCost) * daysValue * (stake.value / 50)) - costPercent;
+            percentOff = 10;
+        } else if (daysValue >= 7.0) {
+            costPercent = (((stake.value / 50) * parseFloat($contractCost) * daysValue) * 15) / 100;
+            cost = (parseFloat($contractCost) * daysValue * (stake.value / 50)) - costPercent;
+            percentOff = 15;
+        };
+        
+
         bonus = Math.floor(stake.value / 300) * 30;
         //console.log(stake.value/50);
     }
@@ -214,9 +232,7 @@
             claim_button_div.style.display = "none";
             actionVal = action.value;
             amountVal = amount.value;
-        } else if (
-            action.value === "add-loan"    
-        ) {
+        } else if (action.value === "add-loan") {
             document.getElementById("recipient_div").style.display = "none";
             days_div.style.display = "none";
             stake_div.style.display = "none";
@@ -226,7 +242,7 @@
             claim_button_div.style.display = "none";
             actionVal = action.value;
             amountVal = amount.value;
-        } else if(action.value === "remove-loan" && $loanAmount != "no loan") {
+        } else if (action.value === "remove-loan" && $loanAmount != "no loan") {
             document.getElementById("recipient_div").style.display = "none";
             days_div.style.display = "none";
             stake_div.style.display = "none";
@@ -236,7 +252,10 @@
             loan_info.style.display = "block";
             actionVal = action.value;
             amountVal = amount.value;
-        } else if(action.value === "remove-loan" && $loanAmount === "no loan") {
+        } else if (
+            action.value === "remove-loan" &&
+            $loanAmount === "no loan"
+        ) {
             document.getElementById("recipient_div").style.display = "none";
             days_div.style.display = "none";
             stake_div.style.display = "none";
@@ -246,7 +265,10 @@
             loan_info.style.display = "block";
             actionVal = action.value;
             amountVal = amount.value;
-        } else if(action.value === "claim-refund" && $loanRefund != "no refund") {
+        } else if (
+            action.value === "claim-refund" &&
+            $loanRefund != "no refund"
+        ) {
             document.getElementById("recipient_div").style.display = "none";
             days_div.style.display = "none";
             stake_div.style.display = "none";
@@ -256,7 +278,10 @@
             loan_info.style.display = "block";
             actionVal = action.value;
             amountVal = amount.value;
-        } else if(action.value === "claim-refund" && $loanRefund === "no refund") {
+        } else if (
+            action.value === "claim-refund" &&
+            $loanRefund === "no refund"
+        ) {
             document.getElementById("recipient_div").style.display = "none";
             days_div.style.display = "none";
             stake_div.style.display = "none";
@@ -267,6 +292,11 @@
             actionVal = action.value;
             amountVal = amount.value;
         }
+        if ($loanAmount === "no loan") {
+            vote_button.style.display = "none";
+        } else {
+            vote_button.style.display = "block";
+        }
         claimFunds = $loanRefund;
         removeFunds = amountVal;
     }
@@ -275,8 +305,32 @@
         statsModule.style.display = "block";
         $rent = await getRentStats($acctName);
     }
-    function updateRent() {
+    async function openVote() {
+        let promises = [];
+        voteModule.style.display = "block";
+        let producersRows = { rows: [], more: true, next_key: "" };
+        const promise = new Promise(async (resolve) => {
+            $producers = await fetchProducers(producersRows.next_key, producersRows);
+            resolve();
+        });
+        promises.push(promise);
+        /*$producers = await fetchProducers(
+            producersRows.next_key,
+            producersRows
+        ).then(setChecks);*/
+        //setChecks();
+        Promise.all(promises).then(()=> setChecks());
+    }
+    async function updateRent() {
         $rents = $rent;
+    }
+    function setChecks() {
+        $votes.forEach(function (vote) {
+            if (!!document.getElementById(vote) === true) {
+                document.getElementById(vote).checked = true;
+            }
+            console.log(!!document.getElementById(vote));
+        });
     }
 </script>
 
@@ -311,10 +365,11 @@
                         id="days"
                         name="days"
                         min="0.5"
-                        max="6"
+                        max="14"
                         bind:value={daysValue}
                         step="0.5"
                     />
+                    <p id="percent_off">{percentOff}% Off</p>
                 </div>
                 <div id="stake_div" class="input-div">
                     <label for="stake">Amount to stake</label>
@@ -323,7 +378,7 @@
                         id="stake"
                         name="stake"
                         min="50"
-                        value="50"
+                        value="300"
                         step="50"
                     />
                     <p>{bonus} Bonus WAX</p>
@@ -331,8 +386,8 @@
                 <div id="loan_info">
                     <h2>Your Loan Stats</h2>
                     <p>
-                        Loan: {$loanAmount}<br />New Loan: {$loanNewAmount}<br />Loan
-                        Refund: {$loanRefund}<br /><br />
+                        Loan: {$loanAmount}<br />New Loan: {$loanNewAmount}<br
+                        />Loan Refund: {$loanRefund}<br /><br />
                     </p>
                     <h2>Payout Stats</h2>
                     <p>
@@ -350,20 +405,26 @@
                 <div id="submit_button_div">
                     <button id="submit_button" type="submit"
                         >{actionVal === "rent" || actionVal === "add-rent"
-                            ? `Send: ${cost.toFixed(4)} WAX`
+                            ? `Send: ${cost.toFixed(5)} WAX`
                             : `Send: ${amountVal} WAX`}</button
                     >
                 </div>
                 <div id="claim_button_div">
                     <button id="claim_button" type="submit"
-                    >{actionVal === "remove-loan"
+                        >{actionVal === "remove-loan"
                             ? `Get: ${removeFunds} WAX`
-                            : `Get: ${claimFunds}`}</button>
+                            : `Get: ${claimFunds}`}</button
+                    >
                 </div>
             </form>
         </div>
         <div class="button_div">
-            <button id="get_stats" on:click={openStats}>Your Rent/Loan Info</button>
+            <button id="get_stats" on:click={openStats}
+                >Your Rent/Loan Info</button
+            >
+            <button id="vote_button" on:click={openVote}
+                >Vote</button
+            >
         </div>
     </div>
 </div>
@@ -411,7 +472,8 @@
     .input-div {
         z-index: 50;
         position: relative;
-        margin-bottom: 4vh;
+        margin-bottom: 1.5vh;
+        margin-top: 1.5vh;
         /*padding: 1vh;*/
         /*border-style: solid;
         border-width: .1vh;
@@ -461,20 +523,21 @@
         flex-direction: column;
         align-items: center;
         position: relative;
-        margin-top: 2.5vh;
+        margin-top: 1vh;
         width: auto;
     }
 
-    #submit_button_div{
+    #submit_button_div {
         display: block;
     }
 
-    #claim_button_div{
+    #claim_button_div {
         display: none;
+        margin-top: 1vh;
     }
 
     button {
-        margin-bottom: 2vh;
+        margin-bottom: 1vh;
         padding: 1vh;
         background-color: #000;
         color: rgb(205, 251, 255);
@@ -515,11 +578,19 @@
         color: #fff;
         text-align: center;
     }
+
+    #percent_off::before {
+        content: '(';
+    }
+
+    #percent_off::after {
+        content: ')';
+    }
     input[type="range"] {
         height: 3vh;
         -webkit-appearance: none;
         margin: 0;
-        width: 75%;
+        width: 100%;
     }
     input[type="range"]:focus {
         outline: none;

@@ -42,13 +42,14 @@ export async function getRentStats(account) {
             if (it >= myChain.rpcEndpoints.length) {
                 it = 0;
             }
-            console.log(it);
+            //console.log(it);
         } catch (e) {
             console.error(e);
         };
     }
 return thisRents;
 };
+
 
 export const loggedIn = writable(false);
 export const acctName = writable("");
@@ -60,3 +61,5 @@ export const loan = writable(false);
 export const loanAmount = writable("no loan");
 export const loanNewAmount = writable("no new loan");
 export const loanRefund = writable("no refund");
+export const votes = writable([]);
+export const voteCounter = writable();

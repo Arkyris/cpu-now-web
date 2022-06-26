@@ -1,4 +1,5 @@
 import { readable } from "svelte/store";
+import { writable } from 'svelte/store';
 
 export const myChain = {
     chainId:
@@ -6,7 +7,7 @@ export const myChain = {
     rpcEndpoints: [
         {
             protocol: "https",
-            host: "api.waxsweden.org",
+            host: "wax.greymass.com",
             port: "443",
         },
         {
@@ -16,7 +17,7 @@ export const myChain = {
         },
         {
             protocol: "https",
-            host: "wax.greymass.com",
+            host: "api.waxsweden.org",
             port: "443",
         },
         {
@@ -26,3 +27,5 @@ export const myChain = {
         },
     ],
 };
+
+export const producers = writable([]);
