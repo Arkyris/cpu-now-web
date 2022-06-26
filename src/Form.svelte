@@ -378,7 +378,7 @@
                         id="stake"
                         name="stake"
                         min="50"
-                        value="50"
+                        value="300"
                         step="50"
                     />
                     <p>{bonus} Bonus WAX</p>

@@ -3,14 +3,14 @@
         <h1>About</h1>
     </div>
     <div id="about">
-        <p>
+        <p class="about-p">
             Welcome to CPU Now! <br />The most affordable, no frills CPU rental
             service. <br /> Here, the cost of rental is easily covered by actions
             you are able to perform with the rented CPU, and you will never be taken
             advantage of for profit.
         </p>
         <h2>Our perks are simple:</h2>
-        <p>
+        <p class="about-p">
             - Get an extra 30 WAX for every 300 you rent.<br />- Rent for 3 - 4.5 days
             and get 5% off.<br />- Rent for 5 - 6.5 days
             and get 10% off.<br />- Rent for 7 days or more
@@ -39,7 +39,7 @@
     }
 
     p {
-        font-size: 2.2vh;
+        /*font-size: 2.2vh;*/
         color: rgb(205, 251, 255);
         text-shadow: 0 0 1vh #fff;
         padding: 1vh;

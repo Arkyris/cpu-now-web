@@ -195,13 +195,13 @@
         </div>
     </nav>
     <div class="info_div">
-        <p>Welcome: {$acctName}<br />{$walletBalance}</p>
+        <p class="header-p">Welcome: {$acctName}<br />{$walletBalance}</p>
         <div class="div" />
-        <p>Total Rent Funds:<br />{$totalFunds.slice(0, -13)} WAX</p>
+        <p class="header-p">Total Rent Funds:<br />{$totalFunds.slice(0, -13)} WAX</p>
         <div class="div" />
-        <p>Available Rent Funds:<br />{$availableFunds.slice(0, -9)} WAX</p>
+        <p class="header-p">Available Rent Funds:<br />{$availableFunds.slice(0, -9)} WAX</p>
         <div class="div" />
-        <p>New Funds: {refundAmount} WAX<br /> In: {refundTimeDisplay}</p>
+        <p class="header-p">New Funds: {refundAmount} WAX<br /> In: {refundTimeDisplay}</p>
     </div>
     <div class="inner_header_div">
         <LoginButton />
@@ -224,7 +224,6 @@
     }
     p {
         flex-direction: row;
-        font-size: 1.2vw;
         color: rgb(205, 251, 255);
         text-shadow: 0 0 1vh #fff;
         top: 1.5vh;
@@ -252,10 +251,11 @@
     .info_div {
         display: flex;
         position: relative;
-        width: 90vw;
-        justify-content: center;
+        width: 75vw;
+        justify-content: left;
         align-items: center;
         height: 90%;
+        margin-left: 10px;
     }
 
     a {
@@ -376,7 +376,7 @@
             inset 0 0 0.5vh #8080ff, inset 0 0 0.75vh #8080ff;
     }
 
-    @media only screen and (min-width: 767px) {
+    @media only screen and (min-width: 550px) {
         .mobile-icon {
             display: none;
         }
@@ -400,6 +400,8 @@
             position: relative;
             width: 55vw;
             justify-content: center;
+            align-items: center;
+            height: 90%;
         }
     }
 </style>

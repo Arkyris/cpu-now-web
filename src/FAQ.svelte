@@ -7,7 +7,7 @@
             <div class="action">
                 <div class="action_title">
                     <h2>Why Rent</h2>
-                    <p>
+                    <p class="faq-p">
                         It may seem there is only one reason to rent CPU. It's
                         crunch time, a drop is happening or your favorite game
                         just released a new update and you're out of spare WAX.
@@ -54,7 +54,6 @@
     }
 
     p {
-        font-size: 2.2vh;
         color: rgb(205, 251, 255);
         text-shadow: 0 0 1vh #fff;
         margin-top: 0;

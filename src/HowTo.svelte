@@ -7,7 +7,7 @@
             <div class="action">
                 <div class="action_title">
                     <h2>Rent</h2>
-                    <p>
+                    <p class="howto-p">
                         To rent CPU select the rent action. You can rent to
                         yourself or another person. Leave the recipient field
                         blank for self rental (optional). Use the slider to
@@ -22,7 +22,7 @@
             <div class="action">
                 <div class="action_title">
                     <h2>Add Rent</h2>
-                    <p>
+                    <p class="howto-p">
                         Use add rent when you want to add an amount to an
                         already existing time frame.
                     </p>
@@ -31,7 +31,7 @@
             <div class="action">
                 <div class="action_title">
                     <h2>Loan</h2>
-                    <p>
+                    <p class="howto-p">
                         Have spare WAX? You can loan to the rental pool and
                         earn. Every 12 hours the rental fees are divied up and
                         sent directly to your loaned amount. Which means your
@@ -45,7 +45,7 @@
             <div class="action">
                 <div class="action_title">
                     <h2>Remove Loan</h2>
-                    <p>
+                    <p class="howto-p">
                         This will remove the requested amount from your loan. If
                         the contract currently doesn't have the funds to refund
                         you in full the excess will be added to your refunding
@@ -85,7 +85,6 @@
     }
 
     p {
-        font-size: 1.5vw;
         color: rgb(205, 251, 255);
         text-shadow: 0 0 1vh #fff;
         margin-top: 0;
