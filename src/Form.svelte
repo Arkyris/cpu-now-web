@@ -42,7 +42,7 @@
     let removeFunds;
     let thisRents = [];
     let costPercent;
-    let buttonTxt;
+    let buttonTxt = "Send";
 
     onMount(() => {
         //updateAccountBalance();
@@ -212,10 +212,14 @@
             costPercent = (((stake.value / 50) * parseFloat($contractCost) * daysValue) * 10) / 100;
             cost = (parseFloat($contractCost) * daysValue * (stake.value / 50)) - costPercent;
             percentOff = 10;
-        } else if (daysValue >= 7.0) {
+        } else if (daysValue >= 7.0 && daysValue < 28.0) {
             costPercent = (((stake.value / 50) * parseFloat($contractCost) * daysValue) * 15) / 100;
             cost = (parseFloat($contractCost) * daysValue * (stake.value / 50)) - costPercent;
             percentOff = 15;
+        } else if (daysValue === 28.0) {
+            costPercent = (((stake.value / 50) * parseFloat($contractCost) * daysValue) * 20) / 100;
+            cost = (parseFloat($contractCost) * daysValue * (stake.value / 50)) - costPercent;
+            percentOff = 20;
         };
         
 
@@ -230,7 +234,6 @@
             submit_button_div.style.display = "block";
             amount_div.style.display = "none";
             loan_info.style.display = "none";
-            claim_button_div.style.display = "none";
             actionVal = action.value;
             amountVal = amount.value;
             buttonTxt = "Send";
@@ -241,7 +244,6 @@
             submit_button_div.style.display = "block";
             amount_div.style.display = "block";
             loan_info.style.display = "block";
-            claim_button_div.style.display = "none";
             actionVal = action.value;
             amountVal = amount.value;
             buttonTxt = "Send";
@@ -249,12 +251,12 @@
             document.getElementById("recipient_div").style.display = "none";
             days_div.style.display = "none";
             stake_div.style.display = "none";
-            submit_button_div.style.display = "none";
-            claim_button_div.style.display = "block";
+            submit_button_div.style.display = "block";
             amount_div.style.display = "block";
             loan_info.style.display = "block";
             actionVal = action.value;
             amountVal = amount.value;
+            buttonTxt = "Get";
         } else if (
             action.value === "remove-loan" &&
             $loanAmount === "no loan"
@@ -262,12 +264,12 @@
             document.getElementById("recipient_div").style.display = "none";
             days_div.style.display = "none";
             stake_div.style.display = "none";
-            submit_button_div.style.display = "none";
-            claim_button_div.style.display = "none";
+            submit_button_div.style.display = "block";
             amount_div.style.display = "none";
             loan_info.style.display = "block";
             actionVal = action.value;
             amountVal = amount.value;
+            buttonTxt = "Get";
         } else if (
             action.value === "claim-refund" &&
             $loanRefund != "no refund"
@@ -275,12 +277,12 @@
             document.getElementById("recipient_div").style.display = "none";
             days_div.style.display = "none";
             stake_div.style.display = "none";
-            submit_button_div.style.display = "none";
-            claim_button_div.style.display = "block";
+            submit_button_div.style.display = "block";
             amount_div.style.display = "none";
             loan_info.style.display = "block";
             actionVal = action.value;
             amountVal = amount.value;
+            buttonTxt = "Get";
         } else if (
             action.value === "claim-refund" &&
             $loanRefund === "no refund"
@@ -288,23 +290,22 @@
             document.getElementById("recipient_div").style.display = "none";
             days_div.style.display = "none";
             stake_div.style.display = "none";
-            submit_button_div.style.display = "none";
-            claim_button_div.style.display = "none";
+            submit_button_div.style.display = "block";
             amount_div.style.display = "none";
             loan_info.style.display = "block";
             actionVal = action.value;
             amountVal = amount.value;
+            buttonTxt = "Get";
         } else if (action.value = "unstake"){
             document.getElementById("recipient_div").style.display = "none";
             days_div.style.display = "none";
             stake_div.style.display = "none";
             submit_button_div.style.display = "block";
-            claim_button_div.style.display = "none";
             amount_div.style.display = "block";
             loan_info.style.display = "none";
             actionVal = action.value;
             amountVal = amount.value;
-            buttonTxt = "Unstake"
+            buttonTxt = "Unstake";
         }
         if ($loanAmount === "no loan") {
             vote_button.style.display = "none";
@@ -380,7 +381,7 @@
                         id="days"
                         name="days"
                         min="0.5"
-                        max="14"
+                        max="28"
                         bind:value={daysValue}
                         step="0.5"
                     />
@@ -422,13 +423,6 @@
                         >{actionVal === "rent" || actionVal === "add-rent"
                             ? `${buttonTxt}: ${cost.toFixed(5)} WAX`
                             : `${buttonTxt}: ${amountVal} WAX`}</button
-                    >
-                </div>
-                <div id="claim_button_div">
-                    <button id="claim_button" type="submit"
-                        >{actionVal === "remove-loan"
-                            ? `Get: ${removeFunds} WAX`
-                            : `Get: ${claimFunds}`}</button
                     >
                 </div>
             </form>
@@ -544,11 +538,6 @@
 
     #submit_button_div {
         display: block;
-    }
-
-    #claim_button_div {
-        display: none;
-        margin-top: 1vh;
     }
 
     button {
