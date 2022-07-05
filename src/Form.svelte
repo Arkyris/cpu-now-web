@@ -42,6 +42,7 @@
     let removeFunds;
     let thisRents = [];
     let costPercent;
+    let buttonTxt;
 
     onMount(() => {
         //updateAccountBalance();
@@ -232,6 +233,7 @@
             claim_button_div.style.display = "none";
             actionVal = action.value;
             amountVal = amount.value;
+            buttonTxt = "Send";
         } else if (action.value === "add-loan") {
             document.getElementById("recipient_div").style.display = "none";
             days_div.style.display = "none";
@@ -242,6 +244,7 @@
             claim_button_div.style.display = "none";
             actionVal = action.value;
             amountVal = amount.value;
+            buttonTxt = "Send";
         } else if (action.value === "remove-loan" && $loanAmount != "no loan") {
             document.getElementById("recipient_div").style.display = "none";
             days_div.style.display = "none";
@@ -291,6 +294,17 @@
             loan_info.style.display = "block";
             actionVal = action.value;
             amountVal = amount.value;
+        } else if (action.value = "unstake"){
+            document.getElementById("recipient_div").style.display = "none";
+            days_div.style.display = "none";
+            stake_div.style.display = "none";
+            submit_button_div.style.display = "block";
+            claim_button_div.style.display = "none";
+            amount_div.style.display = "block";
+            loan_info.style.display = "none";
+            actionVal = action.value;
+            amountVal = amount.value;
+            buttonTxt = "Unstake"
         }
         if ($loanAmount === "no loan") {
             vote_button.style.display = "none";
@@ -346,6 +360,7 @@
                         <option value="add-loan">Loan</option>
                         <option value="remove-loan">Remove Loan</option>
                         <option value="claim-refund">Claim Refund</option>
+                        <option value="unstake">Unstake</option>
                     </select>
                 </div>
                 <div id="recipient_div" class="input-div">
@@ -405,8 +420,8 @@
                 <div id="submit_button_div">
                     <button id="submit_button" type="submit"
                         >{actionVal === "rent" || actionVal === "add-rent"
-                            ? `Send: ${cost.toFixed(5)} WAX`
-                            : `Send: ${amountVal} WAX`}</button
+                            ? `${buttonTxt}: ${cost.toFixed(5)} WAX`
+                            : `${buttonTxt}: ${amountVal} WAX`}</button
                     >
                 </div>
                 <div id="claim_button_div">

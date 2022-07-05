@@ -167,6 +167,26 @@ export async function buildTX(accountName, data, cost, loan) {
         actionArray.push(actionObj);
     }
 
+    if(data.action === "unstake"){
+        amountString = await makeCostString(parseFloat(data.amount));
+        newAction = JSON.stringify({
+            account: 'eosio',
+            name: 'undelegatebw',
+            authorization: [{
+                actor: accountName,
+                permission: 'active',
+            }],
+            data: {
+                from: accountName,
+                receiver: accountName,
+                unstake_net_quantity: '0.00000000 WAX',
+                unstake_cpu_quantity: amountString,
+            },
+        });
+        actionObj = JSON.parse(newAction);
+        actionArray.push(actionObj);
+    }
+
     return { actions: actionArray };
 }
 
