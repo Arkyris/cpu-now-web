@@ -149,7 +149,7 @@ export async function buildTX(accountName, data, cost, loan) {
         actionObj = JSON.parse(newAction);
         actionArray.push(actionObj);
     }
-
+    //vote
     if(data.action === "vote") {
         newAction = JSON.stringify({
             account: 'cpunowcntrct',
@@ -166,7 +166,7 @@ export async function buildTX(accountName, data, cost, loan) {
         actionObj = JSON.parse(newAction);
         actionArray.push(actionObj);
     }
-
+    //unstake
     if(data.action === "unstake"){
         amountString = await makeCostString(parseFloat(data.amount));
         newAction = JSON.stringify({
