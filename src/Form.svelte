@@ -201,27 +201,54 @@
         }
     }
     function updateCost() {
-        if(daysValue < 3.0){
+        if (daysValue < 3.0) {
             cost = parseFloat($contractCost) * daysValue * (stake.value / 50);
             percentOff = 0;
         } else if (daysValue >= 3.0 && daysValue < 5.0) {
-            costPercent = (((stake.value / 50) * parseFloat($contractCost) * daysValue) * 5) / 100;
-            cost = (parseFloat($contractCost) * daysValue * (stake.value / 50)) - costPercent;
+            costPercent =
+                ((stake.value / 50) *
+                    parseFloat($contractCost) *
+                    daysValue *
+                    5) /
+                100;
+            cost =
+                parseFloat($contractCost) * daysValue * (stake.value / 50) -
+                costPercent;
             percentOff = 5;
         } else if (daysValue >= 5.0 && daysValue < 7.0) {
-            costPercent = (((stake.value / 50) * parseFloat($contractCost) * daysValue) * 10) / 100;
-            cost = (parseFloat($contractCost) * daysValue * (stake.value / 50)) - costPercent;
+            costPercent =
+                ((stake.value / 50) *
+                    parseFloat($contractCost) *
+                    daysValue *
+                    10) /
+                100;
+            cost =
+                parseFloat($contractCost) * daysValue * (stake.value / 50) -
+                costPercent;
             percentOff = 10;
         } else if (daysValue >= 7.0 && daysValue < 28.0) {
-            costPercent = (((stake.value / 50) * parseFloat($contractCost) * daysValue) * 15) / 100;
-            cost = (parseFloat($contractCost) * daysValue * (stake.value / 50)) - costPercent;
+            costPercent =
+                ((stake.value / 50) *
+                    parseFloat($contractCost) *
+                    daysValue *
+                    15) /
+                100;
+            cost =
+                parseFloat($contractCost) * daysValue * (stake.value / 50) -
+                costPercent;
             percentOff = 15;
         } else if (daysValue === 28.0) {
-            costPercent = (((stake.value / 50) * parseFloat($contractCost) * daysValue) * 20) / 100;
-            cost = (parseFloat($contractCost) * daysValue * (stake.value / 50)) - costPercent;
+            costPercent =
+                ((stake.value / 50) *
+                    parseFloat($contractCost) *
+                    daysValue *
+                    20) /
+                100;
+            cost =
+                parseFloat($contractCost) * daysValue * (stake.value / 50) -
+                costPercent;
             percentOff = 20;
-        };
-        
+        }
 
         bonus = Math.floor(stake.value / 300) * 30;
         //console.log(stake.value/50);
@@ -296,7 +323,7 @@
             actionVal = action.value;
             amountVal = amount.value;
             buttonTxt = "Get";
-        } else if (action.value = "unstake"){
+        } else if ((action.value = "unstake")) {
             document.getElementById("recipient_div").style.display = "none";
             days_div.style.display = "none";
             stake_div.style.display = "none";
@@ -325,7 +352,10 @@
         voteModule.style.display = "block";
         let producersRows = { rows: [], more: true, next_key: "" };
         const promise = new Promise(async (resolve) => {
-            $producers = await fetchProducers(producersRows.next_key, producersRows);
+            $producers = await fetchProducers(
+                producersRows.next_key,
+                producersRows
+            );
             resolve();
         });
         promises.push(promise);
@@ -334,7 +364,7 @@
             producersRows
         ).then(setChecks);*/
         //setChecks();
-        Promise.all(promises).then(()=> setChecks());
+        Promise.all(promises).then(() => setChecks());
     }
     async function updateRent() {
         $rents = $rent;
@@ -375,7 +405,17 @@
                     />
                 </div>
                 <div id="days_div" class="input-div">
-                    <label for="days">Days {daysValue}</label>
+                    <label for="days">Days: 
+                        <input
+                        type="number"
+                        id="days_number"
+                        name="days"
+                        min=".5"
+                        max="28"
+                        bind:value={daysValue}
+                        step=".5"
+                        />
+                    </label>
                     <input
                         type="range"
                         id="days"
@@ -431,9 +471,7 @@
             <button id="get_stats" on:click={openStats}
                 >Your Rent/Loan Info</button
             >
-            <button id="vote_button" on:click={openVote}
-                >Vote</button
-            >
+            <button id="vote_button" on:click={openVote}>Vote</button>
         </div>
     </div>
 </div>
@@ -584,17 +622,25 @@
     }
 
     #percent_off::before {
-        content: '(';
+        content: "(";
     }
 
     #percent_off::after {
-        content: ')';
+        content: ")";
+    }
+
+    #days_number {
+        height: 20px;
+        width: auto;
     }
     input[type="range"] {
+        position: relative;
         height: 3vh;
         -webkit-appearance: none;
         margin: 0;
-        width: 100%;
+        width: 134%;
+        left: -40px;
+        background-color: #00000000;
     }
     input[type="range"]:focus {
         outline: none;
@@ -650,10 +696,14 @@
         text-shadow: 0 0 1vh #fff;
     }
     input[type="number"]::-webkit-inner-spin-button {
-        background-color: #000;
+        background-color: #00000000;
+        -webkit-appearance: none;
+        margin: 0;
     }
     input[type="number"]::-webkit-outer-spin-button {
-        background-color: #000;
+        background-color: #00000000;
+        -webkit-appearance: none;
+        margin: 0;
     }
     input[type="number"]:focus {
         box-shadow: 0 0 1vh #fff, 0 0 2vh #fff, 0 0 2vh #0ff, 0 0 3vh #0ff,
