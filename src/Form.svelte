@@ -27,7 +27,6 @@
     import { fetchProducers } from "./stores/utils";
     import { getRentStats, rent } from "./stores/current_user";
 
-    let daysValue = 7;
     let cost;
     let bonus;
     let percentOff;
@@ -43,6 +42,7 @@
     let thisRents = [];
     let costPercent;
     let buttonTxt = "Send";
+    let numValues = {days: {value: 7, min: .5, max: 28, step: .5}, stake: {value: 300, min: 50, max: 9000000, step: 50}};
 
     onMount(() => {
         //updateAccountBalance();
@@ -201,51 +201,51 @@
         }
     }
     function updateCost() {
-        if (daysValue < 3.0) {
-            cost = parseFloat($contractCost) * daysValue * (stake.value / 50);
+        if (numValues.days.value < 3.0) {
+            cost = parseFloat($contractCost) * numValues.days.value * (stake.value / 50);
             percentOff = 0;
-        } else if (daysValue >= 3.0 && daysValue < 5.0) {
+        } else if (numValues.days.value >= 3.0 && numValues.days.value < 5.0) {
             costPercent =
                 ((stake.value / 50) *
                     parseFloat($contractCost) *
-                    daysValue *
+                    numValues.days.value *
                     5) /
                 100;
             cost =
-                parseFloat($contractCost) * daysValue * (stake.value / 50) -
+                parseFloat($contractCost) * numValues.days.value * (stake.value / 50) -
                 costPercent;
             percentOff = 5;
-        } else if (daysValue >= 5.0 && daysValue < 7.0) {
+        } else if (numValues.days.value >= 5.0 && numValues.days.value < 7.0) {
             costPercent =
                 ((stake.value / 50) *
                     parseFloat($contractCost) *
-                    daysValue *
+                    numValues.days.value *
                     10) /
                 100;
             cost =
-                parseFloat($contractCost) * daysValue * (stake.value / 50) -
+                parseFloat($contractCost) * numValues.days.value * (stake.value / 50) -
                 costPercent;
             percentOff = 10;
-        } else if (daysValue >= 7.0 && daysValue < 28.0) {
+        } else if (numValues.days.value >= 7.0 && numValues.days.value < 28.0) {
             costPercent =
                 ((stake.value / 50) *
                     parseFloat($contractCost) *
-                    daysValue *
+                    numValues.days.value *
                     15) /
                 100;
             cost =
-                parseFloat($contractCost) * daysValue * (stake.value / 50) -
+                parseFloat($contractCost) * numValues.days.value * (stake.value / 50) -
                 costPercent;
             percentOff = 15;
-        } else if (daysValue === 28.0) {
+        } else if (numValues.days.value === 28.0) {
             costPercent =
                 ((stake.value / 50) *
                     parseFloat($contractCost) *
-                    daysValue *
+                    numValues.days.value *
                     20) /
                 100;
             cost =
-                parseFloat($contractCost) * daysValue * (stake.value / 50) -
+                parseFloat($contractCost) * numValues.days.value * (stake.value / 50) -
                 costPercent;
             percentOff = 20;
         }
@@ -377,6 +377,17 @@
             console.log(!!document.getElementById(vote));
         });
     }
+
+    function numButtonUp(value){
+        if(numValues[value].value < numValues[value].max){
+            numValues[value].value += numValues[value].step;
+        }
+    }
+    function numButtonDown(value){
+        if(numValues[value].value > numValues[value].min){
+            numValues[value].value -= numValues[value].step;
+        }
+    }
 </script>
 
 <div class="form-main-div">
@@ -406,15 +417,17 @@
                 </div>
                 <div id="days_div" class="input-div">
                     <label for="days">Days: 
+                        <button type="button" class="numButton" on:click={() => numButtonDown("days")}>-</button>
                         <input
                         type="number"
                         id="days_number"
                         name="days"
                         min=".5"
                         max="28"
-                        bind:value={daysValue}
+                        bind:value={numValues.days.value}
                         step=".5"
                         />
+                        <button type="button" class="numButton" on:click={() => numButtonUp("days")}>+</button>
                     </label>
                     <input
                         type="range"
@@ -422,21 +435,23 @@
                         name="days"
                         min="0.5"
                         max="28"
-                        bind:value={daysValue}
+                        bind:value={numValues.days.value}
                         step="0.5"
                     />
                     <p id="percent_off">{percentOff}% Off</p>
                 </div>
                 <div id="stake_div" class="input-div">
                     <label for="stake">Amount to stake</label>
+                    <button type="button" class="numButton" on:click={() => numButtonDown("stake")}>-</button>
                     <input
                         type="number"
                         id="stake"
                         name="stake"
                         min="50"
-                        value="300"
+                        bind:value={numValues.stake.value}
                         step="50"
                     />
+                    <button type="button" class="numButton" on:click={() => numButtonUp("stake")}>+</button>
                     <p>{bonus} Bonus WAX</p>
                 </div>
                 <div id="loan_info">
@@ -563,6 +578,13 @@
         letter-spacing: 0.6vw;
         text-shadow: 0 0 0.5vh #fff, 0 0 1vh #fff, 0 0 1vh #f0f, 0 0 1.5vh #f0f,
             0 0 2vh #f0f, 0 0 3vh #f0f, 0 0 4vh #f0f, 0 0 5vh #f0f;
+    }
+
+    .numButton{
+        height: 25px;
+        width: 25px;
+        margin: 0;
+        padding: 0px;
     }
 
     .button_div {
